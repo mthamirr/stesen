@@ -1,0 +1,3060 @@
+@import url("https://fonts.googleapis.com/css2?family=Nunito+Sans:opsz,wght@6..12,600;6..12,700;6..12,800;6..12,900&display=swap");
+
+:root {
+  --paper: #f4f2eb;
+  --paper-2: #fffdf8;
+  --ink: #203039;
+  --muted: #748188;
+  --line: #d7d2c8;
+  --soft-line: #ebe7dd;
+  --coral: #d85d52;
+}
+
+* { box-sizing: border-box; }
+html, body { margin: 0; min-width: 320px; min-height: 100%; }
+body {
+  background: var(--paper);
+  color: var(--ink);
+  font-family: "Nunito Sans", "Avenir Next", "Segoe UI", sans-serif;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: geometricPrecision;
+}
+button, input { font: inherit; }
+button { color: inherit; }
+kbd {
+  min-width: 34px;
+  height: 24px;
+  display: inline-grid;
+  place-items: center;
+  padding: 0 7px;
+  border: 1px solid #c9c6bd;
+  border-bottom-width: 3px;
+  border-radius: 7px;
+  background: #fff;
+  color: #34444b;
+  font-size: 9px;
+  font-weight: 900;
+  line-height: 1;
+}
+
+.stesenShell {
+  --route-color: #00843d;
+  min-height: 100vh;
+  overflow: hidden;
+  background: var(--paper);
+}
+
+/* ---------- Bar atas ---------- */
+.simpleTopBar {
+  position: absolute;
+  z-index: 1200;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 76px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 30px;
+  pointer-events: none;
+  background: transparent;
+}
+.simpleTopButton {
+  height: 46px;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 0 8px;
+  border: 0;
+  border-radius: 12px;
+  background: transparent;
+  cursor: pointer;
+  pointer-events: auto;
+  color: #1c2d35;
+  font-size: 19px;
+  font-weight: 900;
+  text-shadow: 0 1px 0 rgba(255,255,255,.9);
+}
+.simpleTopButton:hover { background: rgba(255,253,248,.66); }
+.simpleTopButton span { font-size: 31px; line-height: 1; font-weight: 900; }
+.simpleSettingsButton span { font-size: 28px; }
+
+.settingsPopover {
+  position: absolute;
+  z-index: 1800;
+  top: 62px;
+  right: 24px;
+  width: min(350px, calc(100vw - 32px));
+  padding: 16px;
+  border: 1px solid #cbc6ba;
+  border-radius: 20px;
+  background: #fffdf8;
+  box-shadow: 0 16px 42px rgba(31, 44, 50, .18);
+}
+.settingsPopoverHead { display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px; }
+.settingsPopoverHead strong { font-family: "Fredoka", "Nunito Sans", sans-serif; font-size: 19px; font-weight: 700; }
+.settingsPopoverHead button { width: 32px; height: 32px; border: 0; border-radius: 50%; background: #efede6; cursor: pointer; font-size: 21px; line-height: 1; }
+.settingRow { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 14px 0; border-top: 1px solid #ece8df; }
+.settingRow > div { min-width: 0; }
+.settingRow strong { display: block; font-size: 13px; font-weight: 900; }
+.settingRow small { display: block; margin-top: 2px; color: var(--muted); font-size: 10px; font-weight: 700; }
+.settingRow > button { flex: 0 0 auto; min-width: 88px; height: 36px; border: 1px solid #d5d0c5; border-radius: 10px; background: #fff; cursor: pointer; font-size: 10px; font-weight: 900; }
+.settingToggle.is-on { border-color: var(--route-color); background: color-mix(in srgb, var(--route-color) 12%, white); color: var(--route-color); }
+
+/* ---------- Peta ---------- */
+.playfield {
+  position: relative;
+  height: 100vh;
+  min-height: 620px;
+  overflow: hidden;
+  background: #eef3ee;
+}
+.networkStage { position: absolute; inset: 0; overflow: hidden; background: #edf2ed; }
+.realMapCanvas { position: absolute; inset: 0; background: #edf2ed; }
+.realMapCanvas.maplibregl-map { font-family: inherit; }
+.realMapCanvas .maplibregl-canvas { outline: none; }
+.realMapCanvas .maplibregl-ctrl-logo { opacity: .22; transform: scale(.72); transform-origin: left bottom; }
+.realMapCanvas .maplibregl-ctrl-attrib {
+  background: rgba(255,255,255,.5) !important;
+  color: #8b9694 !important;
+  font-size: 7px !important;
+  opacity: .6;
+}
+.realMapCanvas .maplibregl-ctrl-attrib a { color: inherit !important; }
+
+.mapRouteTag {
+  position: absolute;
+  z-index: 500;
+  top: 78px;
+  left: 26px;
+  min-height: 43px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 5px 13px 5px 5px;
+  border: 1px solid #d2cec3;
+  border-radius: 14px;
+  background: rgba(255,253,248,.93);
+  box-shadow: 0 5px 14px rgba(31,44,50,.08);
+  backdrop-filter: blur(7px);
+}
+.mapRouteTag > span { width: 33px; height: 33px; display: grid; place-items: center; border-radius: 10px; color: #fff; font-size: 8px; font-weight: 900; }
+.mapRouteTag > div { display: grid; gap: 1px; }
+.mapRouteTag small { color: #7a868b; font-size: 7px; font-weight: 900; letter-spacing: .12em; }
+.mapRouteTag strong { font-size: 11px; font-weight: 900; }
+
+.mapZoom {
+  position: absolute;
+  z-index: 500;
+  top: 78px;
+  right: 20px;
+  display: grid;
+  overflow: hidden;
+  border: 1px solid #d2cec3;
+  border-radius: 14px;
+  background: rgba(255,253,248,.93);
+  box-shadow: 0 5px 14px rgba(31,44,50,.08);
+  backdrop-filter: blur(7px);
+}
+.mapZoom button { width: 42px; height: 38px; border: 0; border-bottom: 1px solid #e5e1d8; background: transparent; cursor: pointer; font-size: 18px; font-weight: 900; }
+.mapZoom button:last-child { border-bottom: 0; }
+.mapZoom button:hover { background: #f0eee7; }
+
+.stesen-map-station {
+  width: 13px;
+  height: 13px;
+  border: 3px solid var(--station-color);
+  border-radius: 50%;
+  background: #fffdf8;
+  box-shadow: 0 0 0 2px rgba(255,253,248,.92);
+}
+.stesen-map-station.is-complete { background: var(--station-color); }
+.stesen-map-station.is-interchange {
+  box-shadow: 0 0 0 2px #fffdf8, 0 0 0 4px rgba(35,52,59,.28);
+}
+.stesen-map-station.is-current { width: 17px; height: 17px; border-width: 4px; box-shadow: 0 0 0 3px #fffdf8, 0 0 0 5px rgba(35,52,59,.18); }
+.stesen-map-label {
+  max-width: 180px;
+  padding: 2px 5px;
+  border-radius: 6px;
+  background: rgba(255,253,248,.78);
+  color: #68757a;
+  font-size: 10px;
+  font-weight: 800;
+  line-height: 1.1;
+  white-space: nowrap;
+  pointer-events: none;
+}
+.stesen-map-label.is-near { background: rgba(255,253,248,.94); color: #26373e; font-size: 11px; font-weight: 900; }
+.stesen-train-marker { width: 86px; height: 86px; display: grid; place-items: center; pointer-events: none; }
+.stesen-map-train { width: 86px; height: 86px; transform-origin: 50% 50%; filter: drop-shadow(0 5px 3px rgba(31,44,50,.18)); transition: transform 100ms linear; }
+
+/* ---------- Statistik tengah ---------- */
+.centerTimer {
+  position: absolute;
+  z-index: 720;
+  left: 50%;
+  bottom: 226px;
+  width: 470px;
+  height: 76px;
+  transform: translateX(-50%);
+  display: grid;
+  grid-template-columns: 88px 1px 1fr 1px 94px;
+  align-items: center;
+  gap: 13px;
+  padding: 8px 15px;
+  border: 1px solid #c9c6bd;
+  border-top: 5px solid var(--route-color);
+  border-radius: 19px 19px 14px 14px;
+  background: rgba(255,253,248,.97);
+  box-shadow: 0 7px 20px rgba(31,44,50,.12);
+  font-variant-numeric: tabular-nums;
+}
+.centerTimer > i { width: 1px; height: 39px; background: #dad7cf; }
+.speedReadout, .timeReadout, .accuracyReadout { min-width: 0; text-align: center; }
+.speedReadout small, .timeReadout small, .accuracyReadout small { display: block; color: var(--muted); font-size: 7px; font-weight: 900; letter-spacing: .12em; }
+.speedReadout strong { display: inline-block; margin-top: 3px; font-size: 27px; line-height: 1; font-weight: 900; }
+.speedReadout span { margin-left: 3px; color: var(--muted); font-size: 8px; font-weight: 900; }
+.timeReadout strong { display: block; margin-top: 3px; font-size: 27px; line-height: 1; font-weight: 900; letter-spacing: .015em; }
+.accuracyReadout strong { display: inline-block; margin-top: 3px; font-size: 27px; line-height: 1; font-weight: 900; }
+.accuracyReadout strong span { font-size: 12px; }
+
+/* ---------- Dock menaip ---------- */
+.typingDock {
+  position: absolute;
+  z-index: 760;
+  left: 50%;
+  bottom: 20px;
+  width: min(1700px, calc(100% - 52px));
+  height: 188px;
+  transform: translateX(-50%);
+  display: grid;
+  grid-template-columns: minmax(265px, .72fr) minmax(780px, 2.15fr) minmax(265px, .72fr);
+  overflow: visible;
+  border: 2px solid #c8c3b8;
+  border-radius: 29px;
+  background: #fffdf8;
+  box-shadow: 0 11px 0 rgba(31,44,50,.05), 0 22px 44px rgba(31,44,50,.13);
+  cursor: text;
+}
+.typingDock::before,
+.typingDock::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  width: 28px;
+  height: 54px;
+  transform: translateY(-50%);
+  border-radius: 50%;
+  background: #edf2ed;
+  z-index: 2;
+}
+.typingDock::before { left: -17px; border-right: 2px solid #c8c3b8; }
+.typingDock::after { right: -17px; border-left: 2px solid #c8c3b8; }
+
+.dockSide { min-width: 0; display: flex; align-items: center; gap: 15px; padding: 24px 28px; }
+.dockPrevious { border-right: 1px dashed #d7d2c7; }
+.dockNext { justify-content: flex-end; border-left: 1px dashed #d7d2c7; text-align: right; }
+.dockSide > div { min-width: 0; }
+.dockSide small { display: block; color: var(--muted); font-size: 10px; font-weight: 900; letter-spacing: .1em; }
+.dockSide strong {
+  display: block;
+  margin-top: 8px;
+  display: -webkit-box;
+  overflow: hidden;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  font-size: 21px;
+  line-height: 1.08;
+  font-weight: 900;
+}
+.dockArrow { width: 47px; height: 47px; flex: 0 0 auto; display: grid; place-items: center; border: 1px solid #d4cfc5; border-radius: 50%; background: #fff; font-size: 22px; font-weight: 900; }
+
+.dockMain {
+  min-width: 0;
+  height: 188px;
+  display: grid;
+  grid-template-columns: 94px minmax(0, 1fr);
+  align-items: center;
+  gap: 24px;
+  padding: 15px 34px 17px;
+  border-top: 7px solid var(--route-color);
+  border-radius: 25px 25px 20px 20px;
+  background: #fffdf8;
+}
+.dockTrain { display: grid; place-items: center; }
+.typingTargetWrap { min-width: 0; overflow: visible; }
+.typingMeta { display: flex; align-items: center; gap: 10px; margin-bottom: 7px; }
+.typingMeta small { color: #718087; font-size: 9px; font-weight: 900; letter-spacing: .11em; }
+.lineBadge { min-width: 32px; height: 24px; display: inline-grid; place-items: center; padding: 0 7px; border-radius: 7px; color: #fff; font-size: 8px; font-weight: 900; }
+.traceBox { position: relative; display: flex; align-items: center; min-width: 0; min-height: 124px; cursor: text; }
+.typingCapture { position: absolute; inset: 0; z-index: 4; width: 100%; height: 100%; margin: 0; padding: 0; border: 0; opacity: 0; background: transparent; color: transparent; caret-color: transparent; }
+.typingTrace {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  display: block;
+  overflow: visible;
+  color: #b6bab6;
+  font-family: "Fredoka", "Nunito Sans", sans-serif;
+  line-height: .92;
+  letter-spacing: -.025em;
+  font-weight: 700;
+  white-space: normal;
+  text-wrap: pretty;
+  user-select: none;
+}
+.traceWord { display: inline-block; white-space: nowrap; }
+.traceWord > span { position: relative; display: inline-block; }
+.traceGap { position: relative; display: inline; white-space: pre; }
+.traceSizeLg { font-size: 64px; }
+.traceSizeMd { font-size: 55px; }
+.traceSizeSm { font-size: 48px; }
+.traceSizeXs { font-size: 42px; }
+.traceSizeXxs { font-size: 38px; letter-spacing: -.03em; }
+.tracePending { color: #858f8c; }
+.traceCorrect { color: #172a32; font-weight: 700; }
+.traceWrong { color: #b83d32; background: #ffe0d9; border-radius: 6px; }
+.traceCursor::after { content: ""; position: absolute; left: 2px; right: 2px; bottom: -9px; height: 4px; border-radius: 99px; background: var(--route-color); animation: cursorBlink 800ms ease-in-out infinite; }
+.traceHasError .traceCursor::after { background: var(--coral); }
+@keyframes cursorBlink { 0%,100% { opacity: .28; } 50% { opacity: 1; } }
+
+/* ---------- Pertukaran ---------- */
+.transferOpenButton {
+  position: absolute;
+  z-index: 735;
+  left: 50%;
+  bottom: 316px;
+  transform: translateX(-50%);
+  height: 42px;
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  padding: 0 14px 0 8px;
+  border: 1px solid #c8c5bc;
+  border-radius: 14px;
+  background: rgba(255,253,248,.97);
+  box-shadow: 0 5px 16px rgba(31,44,50,.11);
+  cursor: pointer;
+  font-size: 11px;
+  font-weight: 900;
+}
+.transferTray {
+  position: absolute;
+  z-index: 780;
+  left: 50%;
+  bottom: 366px;
+  width: min(930px, calc(100% - 80px));
+  display: grid;
+  grid-template-columns: minmax(145px, auto) 1fr auto;
+  align-items: center;
+  gap: 13px;
+  padding: 10px 12px;
+  border: 1px solid #c7c3b8;
+  border-radius: 17px;
+  background: rgba(255,253,248,.98);
+  box-shadow: 0 10px 26px rgba(31,44,50,.15);
+  transform: translateX(-50%);
+}
+.transferCopy small { display: block; color: var(--muted); font-size: 7px; font-weight: 900; letter-spacing: .12em; }
+.transferCopy strong { display: block; margin-top: 2px; font-size: 12px; font-weight: 900; white-space: nowrap; }
+.transferChoices { min-width: 0; display: flex; gap: 7px; overflow-x: auto; }
+.transferChoiceActive, .transferChoices button { height: 45px; flex: 0 0 auto; display: grid; grid-template-columns: 29px auto; grid-template-rows: auto auto; column-gap: 8px; align-items: center; min-width: 168px; padding: 5px 11px 5px 6px; border: 2px solid transparent; border-radius: 12px; background: #f2f0e9; cursor: pointer; text-align: left; }
+.transferChoices button > i { grid-row: 1 / 3; width: 29px; height: 29px; display: grid; place-items: center; border-radius: 9px; background: var(--transfer-color); color: #fff; font-style: normal; font-size: 7px; font-weight: 900; }
+.transferChoices button span { align-self: end; max-width: 180px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 11px; font-weight: 900; }
+.transferChoices button small { align-self: start; max-width: 180px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; color: var(--muted); font-size: 7px; font-weight: 800; }
+.transferChoices button.transferChoiceActive { border-color: var(--transfer-color); background: #fff; }
+.transferChoices button.transferContinueChoice { border-color: color-mix(in srgb, var(--transfer-color) 52%, #d7d3c9); background: #fffdf8; }
+.transferTrayAtStation { border-top: 4px solid var(--route-color); padding-top: 8px; }
+.enterHint { color: var(--muted); font-size: 8px; font-weight: 900; white-space: nowrap; }
+
+/* ---------- Pilih laluan ---------- */
+.routePickerOverlay {
+  position: absolute;
+  z-index: 1600;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+  background: rgba(30,43,49,.28);
+  backdrop-filter: blur(5px);
+}
+.routePickerCard {
+  width: min(760px, 100%);
+  max-height: calc(100% - 40px);
+  overflow: auto;
+  padding: 22px;
+  border: 2px solid #273940;
+  border-radius: 24px;
+  background: #fffdf8;
+  box-shadow: 0 18px 0 rgba(31,44,50,.12), 0 30px 70px rgba(31,44,50,.24);
+}
+.routePickerHead { display: flex; align-items: flex-start; justify-content: space-between; gap: 20px; margin-bottom: 18px; }
+.routePickerHead small { color: #718087; font-size: 8px; font-weight: 900; letter-spacing: .17em; }
+.routePickerHead h2 { margin: 3px 0 2px; font-size: 28px; line-height: 1; font-weight: 900; }
+.routePickerHead p { margin: 6px 0 0; color: var(--muted); font-size: 11px; font-weight: 700; }
+.routePickerHead > button { width: 38px; height: 38px; border: 1px solid #d1cdc3; border-radius: 50%; background: #f4f1ea; cursor: pointer; font-size: 22px; }
+.routePickerGrid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 9px; }
+.routePickerOption { min-width: 0; height: 66px; display: grid; grid-template-columns: 42px 1fr auto; align-items: center; gap: 11px; padding: 7px 13px 7px 7px; border: 1px solid #d9d5cb; border-radius: 15px; background: #fbf9f3; cursor: pointer; text-align: left; }
+.routePickerOption:hover { border-color: var(--pick-color); background: #fff; transform: translateY(-1px); }
+.routePickerOption > i { width: 42px; height: 42px; display: grid; place-items: center; border-radius: 12px; background: var(--pick-color); color: #fff; font-style: normal; font-size: 9px; font-weight: 900; }
+.routePickerOption span { min-width: 0; }
+.routePickerOption strong { display: block; font-size: 12px; font-weight: 900; }
+.routePickerOption small { display: block; margin-top: 2px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; color: var(--muted); font-size: 8px; font-weight: 700; }
+.routePickerOption > b { font-size: 19px; }
+
+/* ---------- Paparan akhir ---------- */
+.arrivalOverlay {
+  position: absolute;
+  z-index: 1500;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  padding: 26px;
+  background: rgba(23,32,37,.82);
+  backdrop-filter: blur(6px);
+}
+.arrivalBoard {
+  --arrival-color: #00843d;
+  width: min(1120px, 100%);
+  overflow: hidden;
+  border: 12px solid #899197;
+  outline: 4px solid #0f171b;
+  border-radius: 18px;
+  background: #1f282d;
+  box-shadow: 0 22px 70px rgba(4,10,13,.42);
+  color: #f8faf9;
+}
+.arrivalBoardTop { height: 84px; display: flex; align-items: center; justify-content: space-between; padding: 0 24px; border-bottom: 1px solid color-mix(in srgb, var(--arrival-color) 65%, #26343a); background: color-mix(in srgb, var(--arrival-color) 28%, #12202a); }
+.arrivalRoute { min-width: 0; display: flex; align-items: center; gap: 10px; }
+.arrivalRouteBadge { width: 48px; height: 48px; display: grid; place-items: center; border-radius: 50%; background: var(--arrival-color); color: #fff; font-size: 10px; font-weight: 900; }
+.arrivalRoute > div { display: grid; }
+.arrivalRoute small { color: #aeb9bd; font-size: 7px; font-weight: 900; letter-spacing: .1em; }
+.arrivalRoute strong { font-size: 21px; font-weight: 900; }
+.journeyBadges { display: flex !important; flex-direction: row !important; gap: 4px; margin-left: 5px; }
+.journeyBadges i { width: 25px; height: 25px; display: grid; place-items: center; border-radius: 50%; color: #fff; font-style: normal; font-size: 6px; font-weight: 900; }
+.arrivalClock { font-size: 38px; letter-spacing: .03em; font-variant-numeric: tabular-nums; }
+.arrivalMessage { position: relative; min-height: 310px; display: grid; grid-template-columns: 150px minmax(0,1fr); align-items: center; gap: 32px; padding: 40px 54px; background: #252f34; }
+.arrivalTrain { display: grid; place-items: center; }
+.arrivalWords { min-width: 0; }
+.arrivalWords small { color: #c5ced1; font-size: 16px; font-weight: 900; letter-spacing: .12em; }
+.arrivalWords h2 { margin: 7px 0 1px; color: #f5f6f2; font-family: "Fredoka", "Nunito Sans", sans-serif; font-size: clamp(58px, 6.8vw, 96px); line-height: .94; font-weight: 700; overflow-wrap: normal; word-break: normal; text-wrap: balance; }
+.arrivalWords p { margin: 12px 0 0; color: #47b9ff; font-family: "Fredoka", "Nunito Sans", sans-serif; font-size: 54px; line-height: 1; font-weight: 900; letter-spacing: .05em; }
+.bestRibbon { position: absolute; top: 19px; right: 20px; padding: 7px 10px; border-radius: 8px; background: #effd3d; color: #253139; font-size: 9px; font-weight: 900; transform: rotate(2deg); }
+.arrivalLineStrip { height: 54px; display: grid; grid-template-columns: 16px 36px auto 1fr; align-items: center; gap: 0; padding: 0 24px; border-top: 7px solid var(--arrival-color); background: #151d21; }
+.arrivalStationDot { width: 16px; height: 16px; border: 4px solid #fff; border-radius: 50%; background: var(--arrival-color); }
+.arrivalLineStrip > i { height: 4px; background: var(--arrival-color); }
+.arrivalLineStrip > strong { padding-left: 9px; font-size: 13px; }
+.arrivalTerminal { justify-self: end; color: #9da9ad; font-size: 9px; font-weight: 900; }
+.arrivalStats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; padding: 22px 24px 12px; }
+.arrivalStats > div { min-height: 124px; display: grid; place-items: center; align-content: center; border: 1px solid #445159; border-radius: 8px; background: #273137; text-align: center; }
+.arrivalStats small { color: #c0c9cc; font-size: 13px; font-weight: 900; }
+.arrivalStats strong { margin-top: 8px; font-size: 44px; line-height: 1; }
+.arrivalStats strong span { color: #55c5ff; font-size: 12px; }
+.bestTimeLine { padding: 0 24px 13px; color: #9eaaae; font-size: 10px; text-align: right; }
+.bestTimeLine strong { color: #fff; }
+.arrivalActions { display: grid; grid-template-columns: 1.4fr .9fr; gap: 10px; padding: 8px 24px 24px; }
+.arrivalActions button { height: 72px; border-radius: 7px; cursor: pointer; font-size: 19px; font-weight: 900; }
+.arrivalPrimary { display: flex; align-items: center; justify-content: center; gap: 12px; border: 0; background: var(--arrival-color); color: #fff; }
+.arrivalPrimary span { font-size: 22px; }
+.arrivalSecondary { border: 1px solid #4c5960; background: #293339; color: #d7dddf; }
+
+/* ---------- Responsif ---------- */
+@media (max-width: 1180px) {
+  .typingDock { width: calc(100% - 28px); grid-template-columns: 190px minmax(0,1fr) 190px; }
+  .dockSide { padding: 20px 18px; }
+  .dockSide strong { font-size: 15px; }
+  .dockMain { grid-template-columns: 72px minmax(0,1fr); gap: 13px; padding-left: 20px; padding-right: 20px; }
+  .traceSizeLg { font-size: 60px; }
+  .traceSizeMd { font-size: 53px; }
+  .traceSizeSm { font-size: 46px; }
+  .traceSizeXs { font-size: 40px; }
+  .traceSizeXxs { font-size: 35px; }
+}
+
+@media (max-width: 820px) {
+  .simpleTopBar { height: 64px; padding: 0 14px; }
+  .simpleTopButton { padding: 0 6px; font-size: 16px; }
+  .playfield { min-height: 700px; }
+  .mapRouteTag { top: 68px; left: 12px; }
+  .mapZoom { top: 68px; right: 12px; }
+  .centerTimer { bottom: 238px; width: min(410px, calc(100% - 28px)); grid-template-columns: 76px 1px 1fr 1px 82px; }
+  .typingDock { bottom: 12px; width: calc(100% - 20px); height: 205px; grid-template-columns: 1fr 1fr; grid-template-rows: 70px 135px; border-radius: 22px; }
+  .typingDock::before, .typingDock::after { display: none; }
+  .dockMain { grid-column: 1 / 3; grid-row: 2; height: 135px; grid-template-columns: 58px minmax(0,1fr); padding: 10px 16px; border-radius: 0 0 20px 20px; border-top-width: 5px; }
+  .dockPrevious, .dockNext { grid-row: 1; padding: 10px 14px; border: 0; }
+  .dockPrevious { grid-column: 1; border-right: 1px dashed #d7d2c7; }
+  .dockNext { grid-column: 2; }
+  .dockArrow { width: 34px; height: 34px; font-size: 16px; }
+  .dockSide small { font-size: 7px; }
+  .dockSide strong { margin-top: 4px; font-size: 14px; }
+  .traceBox { height: 76px; }
+  .traceSizeLg { font-size: 42px; }
+  .traceSizeMd { font-size: 36px; }
+  .traceSizeSm { font-size: 31px; }
+  .traceSizeXs { font-size: 27px; }
+  .traceSizeXxs { font-size: 23px; }
+  .typingMeta { margin-bottom: 2px; }
+  .transferOpenButton { bottom: 322px; }
+  .transferTray { bottom: 370px; width: calc(100% - 24px); grid-template-columns: 1fr; }
+  .enterHint { display: none; }
+  .routePickerGrid { grid-template-columns: 1fr; }
+  .arrivalOverlay { padding: 12px; }
+  .arrivalBoard { border-width: 7px; }
+  .arrivalMessage { min-height: 235px; grid-template-columns: 82px minmax(0,1fr); padding: 24px 20px; }
+  .arrivalWords h2 { font-size: clamp(40px, 11vw, 58px); }
+  .arrivalWords p { font-size: 38px; }
+  .arrivalClock { font-size: 24px; }
+  .arrivalStats { grid-template-columns: 1fr; }
+  .arrivalStats > div { min-height: 74px; }
+  .arrivalActions { grid-template-columns: 1fr; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; scroll-behavior: auto !important; transition-duration: .01ms !important; }
+}
+
+/* =========================================================
+   legacy home styles (unused)
+   ========================================================= */
+
+.homeShell {
+  --home-route: #047940;
+  position: relative;
+  min-height: 100vh;
+  overflow: hidden;
+  background: #fbfaf5;
+  color: #172b33;
+}
+.homeRailArt { position: fixed; inset: 0; z-index: 0; pointer-events: none; overflow: hidden; opacity: .72; }
+.homeRailLine { position: absolute; display: block; height: 14px; border-radius: 99px; transform-origin: left center; }
+.homeRailLine::after { content: ""; position: absolute; inset: 3px 0; border-radius: inherit; background: rgba(255,255,255,.72); }
+.railA { width: 48vw; top: 110px; left: -7vw; background: #b7ddc9; transform: rotate(18deg); }
+.railB { width: 55vw; top: 315px; right: -16vw; background: #b9d9e6; transform: rotate(-24deg); }
+.railC { width: 56vw; bottom: 120px; left: 11vw; background: #ead3a1; transform: rotate(13deg); }
+.homeRailNode { position: absolute; width: 30px; height: 30px; border: 7px solid #77827f; border-radius: 50%; background: #fbfaf5; }
+.nodeA { top: 153px; left: 24vw; }
+.nodeB { top: 280px; right: 25vw; }
+.nodeC { bottom: 143px; left: 43vw; }
+.nodeD { bottom: 87px; right: 14vw; }
+
+.homeHeader {
+  position: relative;
+  z-index: 2;
+  width: min(1500px, calc(100% - 64px));
+  height: 92px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  border-bottom: 1px solid #d8d5cc;
+}
+.homeBrandMark {
+  width: 54px;
+  height: 54px;
+  display: grid;
+  place-items: center;
+  border: 2px solid #203239;
+  border-radius: 17px;
+  background: #fffef9;
+  box-shadow: inset 0 -5px 0 #eef0e8;
+  font-family: "Fredoka", sans-serif;
+  font-size: 26px;
+  font-weight: 700;
+}
+.homeBrandCopy { display: grid; gap: 1px; }
+.homeBrandCopy strong { font-family: "Fredoka", sans-serif; font-size: 26px; line-height: 1; letter-spacing: .08em; }
+.homeBrandCopy span { color: #6f7c80; font-size: 10px; font-weight: 800; }
+.homeHeaderNote { margin-left: auto; color: #627075; font-size: 10px; font-weight: 900; letter-spacing: .16em; }
+
+.homeHero {
+  position: relative;
+  z-index: 2;
+  width: min(1500px, calc(100% - 64px));
+  margin: 54px auto 38px;
+  display: grid;
+  grid-template-columns: minmax(310px, .78fr) minmax(640px, 1.22fr);
+  gap: 58px;
+  align-items: start;
+}
+.homeIntro { padding: 34px 0 0; }
+.homeEyebrow { display: inline-block; padding-bottom: 9px; border-bottom: 5px solid var(--home-route); color: #5e6b70; font-size: 10px; font-weight: 900; letter-spacing: .14em; }
+.homeIntro h1 { margin: 22px 0 18px; font-family: "Fredoka", sans-serif; font-size: clamp(52px, 5vw, 78px); line-height: .92; letter-spacing: -.035em; font-weight: 700; }
+.homeIntro p { max-width: 540px; margin: 0; color: #627176; font-size: 16px; line-height: 1.65; font-weight: 700; }
+
+.homeSetupPanel {
+  overflow: hidden;
+  border: 2px solid #263a42;
+  border-radius: 27px;
+  background: #fffef9;
+  box-shadow: 0 12px 0 rgba(29,45,52,.08);
+}
+.homeSelectedLine { min-height: 130px; display: grid; grid-template-columns: 98px minmax(0,1fr) auto; align-items: center; gap: 16px; padding: 18px 25px; border-bottom: 1px solid #dedbd2; }
+.homeSelectedLine > div { min-width: 0; display: grid; gap: 3px; }
+.homeSelectedLine > div > span { color: #7b878a; font-size: 9px; font-weight: 900; letter-spacing: .14em; }
+.homeSelectedLine > div > strong { font-family: "Fredoka", sans-serif; font-size: 34px; line-height: 1; }
+.homeSelectedLine > div > small { margin-top: 4px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; color: #647278; font-size: 11px; font-weight: 800; }
+.homeSelectedLine > b { min-width: 58px; height: 44px; display: grid; place-items: center; padding: 0 10px; border-radius: 13px; color: #fff; font-size: 10px; font-weight: 900; box-shadow: inset 0 -4px 0 rgba(0,0,0,.12); }
+
+.homeRecords { display: grid; grid-template-columns: repeat(4, 1fr); border-bottom: 1px solid #dedbd2; background: #f6f5ef; }
+.homeRecords > div { min-width: 0; min-height: 96px; display: grid; align-content: center; padding: 14px 18px; border-right: 1px solid #dedbd2; }
+.homeRecords > div:last-child { border-right: 0; }
+.homeRecords span { color: #7b878a; font-size: 8px; font-weight: 900; letter-spacing: .1em; }
+.homeRecords strong { margin-top: 5px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 24px; line-height: 1; font-weight: 900; font-variant-numeric: tabular-nums; }
+.homeRecords strong em { color: #718086; font-size: 9px; font-style: normal; }
+.homeRecords small { margin-top: 5px; color: #9aa2a1; font-size: 8px; font-weight: 800; }
+
+.homeJourneySetup { display: grid; grid-template-columns: .9fr 1.1fr; gap: 17px; padding: 23px 25px 19px; }
+.homeField, .homeDirectionField { min-width: 0; }
+.homeField > span, .homeDirectionField > span { display: block; margin-bottom: 8px; color: #6c797d; font-size: 9px; font-weight: 900; letter-spacing: .12em; }
+.homeField select { width: 100%; height: 58px; padding: 0 42px 0 15px; border: 1px solid #c8c6be; border-radius: 14px; outline: 0; background: #fff; color: #1c3038; font-size: 14px; font-weight: 900; }
+.homeField select:focus { border: 2px solid var(--home-route); }
+.homeDirectionButtons { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 8px; }
+.homeDirectionButtons button { min-width: 0; height: 58px; display: grid; align-content: center; gap: 1px; padding: 6px 12px; border: 1px solid #d0cdc4; border-radius: 14px; background: #f5f3ed; cursor: pointer; text-align: left; }
+.homeDirectionButtons button.is-selected { border: 2px solid var(--home-route); background: color-mix(in srgb, var(--home-route) 8%, white); }
+.homeDirectionButtons small { color: #8b9697; font-size: 7px; font-weight: 900; letter-spacing: .1em; }
+.homeDirectionButtons strong { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 12px; font-weight: 900; }
+.homeStartButton { width: calc(100% - 50px); height: 74px; margin: 0 25px 25px; display: flex; align-items: center; justify-content: space-between; padding: 0 0 0 22px; overflow: hidden; border: 0; border-radius: 17px; background: var(--home-route); color: #fff; cursor: pointer; box-shadow: inset 0 -5px 0 rgba(0,0,0,.13); text-align: left; }
+.homeStartButton > span { display: grid; font-family: "Fredoka", sans-serif; font-size: 22px; font-weight: 700; }
+.homeStartButton small { font-family: "Nunito Sans", sans-serif; font-size: 8px; font-weight: 900; letter-spacing: .12em; opacity: .78; }
+.homeStartButton b { width: 78px; align-self: stretch; display: grid; place-items: center; border-left: 1px dashed rgba(255,255,255,.5); font-size: 33px; }
+.homeStartButton:hover { filter: saturate(1.08) brightness(.98); }
+
+.homeRouteSection { position: relative; z-index: 2; width: min(1500px, calc(100% - 64px)); margin: 0 auto; padding: 32px 0 72px; border-top: 1px solid #d8d5cc; }
+.homeSectionHead { display: flex; align-items: end; justify-content: space-between; gap: 30px; margin-bottom: 25px; }
+.homeSectionHead span { color: #7b878b; font-size: 9px; font-weight: 900; letter-spacing: .14em; }
+.homeSectionHead h2 { margin: 3px 0 0; font-family: "Fredoka", sans-serif; font-size: 35px; }
+.homeSectionHead p { max-width: 440px; margin: 0; color: #788487; font-size: 11px; font-weight: 800; text-align: right; }
+.homeRouteGroup { margin-top: 22px; }
+.homeRouteGroup h3 { margin: 0 0 9px; color: #68767a; font-size: 10px; font-weight: 900; letter-spacing: .1em; text-transform: uppercase; }
+.homeRouteGrid { display: grid; grid-template-columns: repeat(5, minmax(0,1fr)); gap: 10px; }
+.homeRouteCard { --card-route: #047940; min-width: 0; height: 74px; display: grid; grid-template-columns: 46px minmax(0,1fr) 20px; align-items: center; gap: 10px; padding: 8px 10px 8px 8px; border: 1px solid #d3d0c7; border-radius: 16px; background: rgba(255,254,249,.91); cursor: pointer; text-align: left; transition: transform 120ms ease, border-color 120ms ease; }
+.homeRouteCard:hover { transform: translateY(-2px); border-color: var(--card-route); }
+.homeRouteCard.is-selected { border: 3px solid var(--card-route); padding: 6px 8px 6px 6px; background: #fff; box-shadow: 0 5px 0 color-mix(in srgb, var(--card-route) 16%, transparent); }
+.homeRouteCard > i { width: 46px; height: 46px; display: grid; place-items: center; border-radius: 14px; background: var(--card-route); color: #fff; font-style: normal; font-size: 8px; font-weight: 900; box-shadow: inset 0 -4px 0 rgba(0,0,0,.12); }
+.homeRouteCard > span { min-width: 0; }
+.homeRouteCard strong { display: block; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 12px; font-weight: 900; }
+.homeRouteCard small { display: block; margin-top: 2px; color: #899395; font-size: 8px; font-weight: 800; }
+.homeRouteCard > b { color: #657479; font-size: 17px; }
+
+/* Lebihkan kejelasan petunjuk peta dan pertukaran */
+.mapRouteTag { top: 82px; left: 28px; min-height: 62px; gap: 13px; padding: 7px 18px 7px 7px; border-radius: 18px; }
+.mapRouteTag > span { width: 47px; height: 47px; border-radius: 14px; font-size: 10px; }
+.mapRouteTag small { font-size: 8px; }
+.mapRouteTag strong { font-size: 15px; }
+.mapZoom { top: 82px; right: 28px; border-radius: 17px; }
+.mapZoom button { width: 54px; height: 51px; font-size: 23px; }
+
+.transferTray { bottom: 374px; width: min(1210px, calc(100% - 70px)); min-height: 78px; grid-template-columns: minmax(185px, auto) 1fr auto; gap: 17px; padding: 12px 15px; border-radius: 20px; }
+.transferCopy small { font-size: 9px; }
+.transferCopy strong { margin-top: 4px; font-size: 15px; }
+.transferChoices { gap: 9px; }
+.transferChoices button { height: 56px; grid-template-columns: 38px auto; min-width: 215px; column-gap: 10px; padding: 6px 14px 6px 7px; border-radius: 14px; }
+.transferChoices button > i { width: 38px; height: 38px; border-radius: 11px; font-size: 8px; }
+.transferChoices button span { max-width: 235px; font-size: 13px; }
+.transferChoices button small { max-width: 235px; font-size: 8px; }
+.enterHint { font-size: 10px; }
+.enterHint b { margin: 0 4px; }
+.enterHint kbd { min-width: 38px; height: 27px; font-size: 9px; }
+
+/* Typing / side copy clearer without changing the ticket silhouette */
+.dockSide small { font-size: 11px; }
+.dockSide strong { font-size: 23px; line-height: 1.12; }
+.typingTrace { font-weight: 700; letter-spacing: -.032em; }
+.tracePending { color: #9ca39f; }
+.traceCorrect { color: #132a32; font-weight: 700; }
+.traceSizeLg { font-size: 68px; }
+.traceSizeMd { font-size: 59px; }
+.traceSizeSm { font-size: 51px; }
+.traceSizeXs { font-size: 44px; }
+.traceSizeXxs { font-size: 39px; }
+
+@media (max-width: 1200px) {
+  .homeHero { grid-template-columns: 1fr; gap: 24px; }
+  .homeIntro { padding-top: 0; }
+  .homeRouteGrid { grid-template-columns: repeat(3, minmax(0,1fr)); }
+  .homeRecords { grid-template-columns: repeat(2, 1fr); }
+  .homeRecords > div:nth-child(2) { border-right: 0; }
+  .homeRecords > div:nth-child(-n+2) { border-bottom: 1px solid #dedbd2; }
+}
+
+@media (max-width: 820px) {
+  .homeHeader, .homeHero, .homeRouteSection { width: calc(100% - 28px); }
+  .homeHeader { height: 76px; }
+  .homeHeaderNote { display: none; }
+  .homeBrandMark { width: 46px; height: 46px; }
+  .homeBrandCopy strong { font-size: 22px; }
+  .homeHero { margin-top: 24px; }
+  .homeIntro h1 { font-size: 48px; }
+  .homeIntro p { font-size: 14px; }
+  .homeSelectedLine { grid-template-columns: 74px minmax(0,1fr); padding: 14px; }
+  .homeSelectedLine > b { display: none; }
+  .homeSelectedLine > div > strong { font-size: 27px; }
+  .homeJourneySetup { grid-template-columns: 1fr; padding: 17px; }
+  .homeStartButton { width: calc(100% - 34px); margin: 0 17px 17px; }
+  .homeRouteGrid { grid-template-columns: 1fr 1fr; }
+  .homeSectionHead { align-items: start; flex-direction: column; gap: 5px; }
+  .homeSectionHead p { text-align: left; }
+  .mapRouteTag { top: 68px; left: 12px; min-height: 52px; padding: 5px 12px 5px 5px; }
+  .mapRouteTag > span { width: 40px; height: 40px; }
+  .mapRouteTag strong { font-size: 13px; }
+  .mapZoom { top: 68px; right: 12px; }
+  .mapZoom button { width: 47px; height: 44px; }
+  .transferTray { bottom: 370px; width: calc(100% - 24px); grid-template-columns: 1fr; min-height: unset; }
+  .dockSide strong { font-size: 15px; }
+  .dockSide small { font-size: 8px; }
+}
+
+/* =========================================================
+   STESEN v8 - landing + terminal-only route selection
+   ========================================================= */
+
+.landingShell,
+.routeSelectShell {
+  min-height: 100vh;
+  position: relative;
+  overflow: hidden;
+  background: #fbfaf5;
+  color: #172b33;
+}
+
+/* Landing */
+.landingNetworkArt { position: absolute; inset: 0; pointer-events: none; overflow: hidden; opacity: .82; }
+.landingRail { position: absolute; display: block; height: 14px; border-radius: 999px; }
+.landingRail::after { content: ""; position: absolute; inset: 3px 0; border-radius: inherit; background: rgba(255,255,255,.8); }
+.landingRailA { width: 56vw; left: -10vw; top: 23%; background: #b7dec9; transform: rotate(19deg); }
+.landingRailB { width: 54vw; right: -12vw; top: 18%; background: #b6d9e8; transform: rotate(-25deg); }
+.landingRailC { width: 56vw; left: 28vw; bottom: 9%; background: #e7d1a2; transform: rotate(8deg); }
+.landingRailD { width: 39vw; right: -5vw; bottom: 31%; background: #d6bfdf; transform: rotate(0deg); }
+.landingNode { position: absolute; width: 31px; height: 31px; border: 7px solid #7d8885; border-radius: 50%; background: #fbfaf5; }
+.landingNode.node1 { left: 23%; top: 22%; }
+.landingNode.node2 { left: 38%; top: 39%; }
+.landingNode.node3 { right: 23%; top: 21%; }
+.landingNode.node4 { right: 13%; bottom: 29%; }
+.landingNode.node5 { left: 42%; bottom: 13%; }
+.landingNode.node6 { left: 8%; bottom: 24%; }
+
+.landingHeader,
+.routeSelectHeader {
+  position: relative;
+  z-index: 3;
+  width: min(1540px, calc(100% - 72px));
+  height: 92px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid #d9d5cb;
+}
+.landingBrand, .routeSelectBrand { display: flex; align-items: center; gap: 14px; }
+.landingBrand > span, .routeSelectBrand > span {
+  width: 55px; height: 55px; display: grid; place-items: center;
+  border: 2px solid #26383f; border-radius: 18px; background: #fffef9;
+  box-shadow: inset 0 -5px 0 #edf0e8;
+  font-family: "Fredoka", sans-serif; font-size: 27px; font-weight: 700;
+}
+.landingBrand > div { display: grid; gap: 2px; }
+.landingBrand strong, .routeSelectBrand strong { font-family: "Fredoka", sans-serif; font-size: 28px; letter-spacing: .09em; line-height: 1; }
+.landingBrand small { color: #6d7a7f; font-size: 10px; font-weight: 800; }
+.landingHeaderActions { display: flex; align-items: center; gap: 10px; }
+.guestBadge { padding: 7px 10px; border: 1px solid #d8d3c8; border-radius: 999px; background: rgba(255,255,255,.72); color: #7a8587; font-size: 8px; font-weight: 900; letter-spacing: .14em; }
+.landingIconButton { width: 47px; height: 47px; border: 0; background: transparent; border-radius: 50%; cursor: pointer; font-size: 24px; }
+.landingIconButton:hover { background: #efede6; }
+
+.accountButton { min-height: 50px; display: grid; grid-template-columns: 18px 1fr; align-items: center; gap: 10px; padding: 0 14px; border: 1px solid #d5d1c7; border-radius: 14px; background: #fffef9; cursor: pointer; text-align: left; }
+.accountButton > span { width: 16px; height: 16px; display: grid; place-items: center; color: #4e645c; font-size: 10px; }
+.accountButton strong { font-size: 13px; font-weight: 900; }
+.accountButtonCompact { min-height: 44px; border: 0; background: transparent; }
+.accountOverlay, .recordsOverlay { position: fixed; z-index: 4000; inset: 0; display: grid; place-items: center; padding: 22px; background: rgba(28,42,48,.33); backdrop-filter: blur(5px); }
+.accountDialog, .recordsDialog { position: relative; width: min(560px, 100%); border: 2px solid #263940; border-radius: 24px; background: #fffef9; box-shadow: 0 18px 0 rgba(30,44,51,.12); padding: 28px; }
+.accountClose, .recordsHead > button { position: absolute; top: 16px; right: 16px; width: 38px; height: 38px; border: 0; border-radius: 50%; background: #efede6; cursor: pointer; font-size: 23px; }
+.accountDialog > small, .recordsHead small { color: #728084; font-size: 9px; font-weight: 900; letter-spacing: .14em; }
+.accountDialog h2, .recordsHead h2 { margin: 8px 0 8px; font-family: "Fredoka", sans-serif; font-size: 32px; }
+.accountDialog p { margin: 0 0 22px; color: #667479; line-height: 1.55; font-size: 13px; font-weight: 700; }
+.accountDialog label span { display: block; margin-bottom: 7px; color: #738083; font-size: 8px; font-weight: 900; letter-spacing: .14em; }
+.accountDialog input { width: 100%; height: 52px; padding: 0 14px; border: 1px solid #ccc8bd; border-radius: 13px; outline: 0; background: #fff; font-size: 14px; font-weight: 800; }
+.accountDialog input:focus { border: 2px solid #1c7f50; }
+.accountPrimary { width: 100%; height: 54px; margin-top: 12px; border: 0; border-radius: 13px; background: #1d7e51; color: #fff; cursor: pointer; font-weight: 900; }
+.accountPrimary:disabled { opacity: .6; cursor: wait; }
+.accountIdentity, .accountMessage, .accountConfigNote { display: block; margin-top: 12px; padding: 12px 14px; border-radius: 12px; background: #f0eee7; color: #536167; font-size: 11px; font-weight: 800; }
+
+.landingMain { position: relative; z-index: 2; width: min(1540px, calc(100% - 72px)); min-height: calc(100vh - 152px); margin: 0 auto; display: grid; grid-template-columns: minmax(390px,.82fr) minmax(560px,1.18fr); gap: 76px; align-items: center; padding: 54px 0 82px; }
+.landingMenu { max-width: 600px; }
+.landingKicker { display: inline-block; padding-bottom: 9px; border-bottom: 5px solid #238451; color: #667479; font-size: 10px; font-weight: 900; letter-spacing: .16em; }
+.landingMenu h1 { margin: 24px 0 20px; font-family: "Fredoka", sans-serif; font-size: clamp(62px, 6vw, 96px); line-height: .88; letter-spacing: -.035em; }
+.landingMenu > p { max-width: 520px; margin: 0 0 30px; color: #627176; font-size: 17px; line-height: 1.65; font-weight: 700; }
+.landingStart { width: min(540px, 100%); height: 82px; display: flex; align-items: stretch; justify-content: space-between; padding: 0; overflow: hidden; border: 0; border-radius: 19px; background: #18834f; color: #fff; cursor: pointer; box-shadow: inset 0 -6px 0 rgba(0,0,0,.14), 0 9px 0 rgba(29,59,45,.08); text-align: left; }
+.landingStart > span { display: grid; align-content: center; padding-left: 22px; font-family: "Fredoka", sans-serif; font-size: 25px; font-weight: 700; }
+.landingStart small { font-family: "Nunito Sans", sans-serif; font-size: 8px; font-weight: 900; letter-spacing: .13em; opacity: .78; }
+.landingStart b { width: 84px; display: grid; place-items: center; border-left: 1px dashed rgba(255,255,255,.45); font-size: 36px; }
+.landingSecondaryMenu { width: min(540px, 100%); display: grid; grid-template-columns: 1.4fr .8fr; gap: 10px; margin-top: 14px; }
+.landingSecondaryMenu > button { min-height: 66px; display: grid; grid-template-columns: 34px 1fr; grid-template-rows: 1fr 1fr; align-items: center; padding: 9px 12px; border: 1px solid #d6d2c8; border-radius: 15px; background: rgba(255,254,249,.88); cursor: pointer; text-align: left; }
+.landingSecondaryMenu > button > span { grid-row: 1 / 3; font-size: 24px; }
+.landingSecondaryMenu strong { font-size: 13px; font-weight: 900; }
+.landingSecondaryMenu small { color: #8b9596; font-size: 8px; font-weight: 800; }
+
+.landingFeatureCard { overflow: hidden; border: 2px solid #273a41; border-radius: 30px; background: rgba(255,254,249,.96); box-shadow: 0 13px 0 rgba(28,44,50,.09); }
+.landingFeatureTop { height: 62px; display: flex; align-items: center; justify-content: space-between; padding: 0 24px; background: #203238; color: #fff; }
+.landingFeatureTop span { font-size: 9px; font-weight: 900; letter-spacing: .16em; }
+.landingFeatureTop strong { font-size: 23px; font-variant-numeric: tabular-nums; }
+.landingFeatureRoute { min-height: 230px; display: grid; grid-template-columns: 125px 1fr; align-items: center; gap: 18px; padding: 26px 36px; border-bottom: 1px solid #ddd9cf; }
+.featureTrainFace { width: 106px; height: 126px; display: grid; place-items: center; border: 4px solid #293b42; border-radius: 35px 35px 24px 24px; background: #e8f4ef; font-size: 58px; transform: rotate(-3deg); box-shadow: 7px 7px 0 #f2d36f; }
+.landingFeatureRoute small { color: #748185; font-size: 9px; font-weight: 900; letter-spacing: .12em; }
+.landingFeatureRoute h2 { margin: 7px 0 5px; font-family: "Fredoka", sans-serif; font-size: clamp(42px, 4vw, 64px); line-height: .95; }
+.landingFeatureRoute p { margin: 0; color: #69777a; font-size: 12px; font-weight: 800; }
+.landingFeatureStats { display: grid; grid-template-columns: repeat(3,1fr); background: #f4f2eb; }
+.landingFeatureStats > div { min-height: 92px; display: grid; align-content: center; padding: 14px 18px; border-right: 1px solid #d8d4ca; }
+.landingFeatureStats > div:last-child { border: 0; }
+.landingFeatureStats small { color: #7c888a; font-size: 8px; font-weight: 900; letter-spacing: .11em; }
+.landingFeatureStats strong { margin-top: 5px; font-size: 24px; }
+.landingFeatureFoot { padding: 14px 20px 17px; color: #7c888a; font-size: 9px; font-weight: 800; }
+.landingFooter { position: absolute; z-index: 2; left: 0; right: 0; bottom: 0; height: 54px; display: flex; justify-content: space-between; align-items: center; padding: 0 max(36px, calc((100vw - 1540px)/2)); color: #738084; font-size: 9px; font-weight: 900; letter-spacing: .12em; }
+
+.recordsDialog { width: min(760px, 100%); max-height: min(680px, calc(100vh - 44px)); overflow: auto; }
+.recordsHead { position: relative; padding-right: 48px; }
+.recordsHead > button { top: -4px; right: 0; }
+.recordsEmpty { margin-top: 22px; padding: 36px; border: 1px dashed #cbc7bc; border-radius: 16px; color: #758184; text-align: center; font-weight: 800; }
+.recordsList { display: grid; gap: 8px; margin-top: 20px; }
+.recordRow { min-height: 68px; display: grid; grid-template-columns: 44px minmax(0,1fr) 118px 150px; align-items: center; gap: 12px; padding: 8px; border: 1px solid #ddd9cf; border-radius: 14px; background: #fbfaf5; }
+.recordRow > i { width: 44px; height: 44px; display: grid; place-items: center; border-radius: 12px; color: #fff; font-style: normal; font-size: 8px; font-weight: 900; }
+.recordRow > span { min-width: 0; }
+.recordRow span strong, .recordRow span small { display: block; }
+.recordRow span strong { font-size: 13px; }
+.recordRow span small { margin-top: 2px; color: #879193; font-size: 8px; }
+.recordRow > b { font-size: 15px; font-variant-numeric: tabular-nums; }
+.recordRow > em { color: #6e7a7e; font-size: 9px; font-style: normal; font-weight: 900; text-align: right; }
+
+/* Route selection */
+.routeSelectShell { overflow: auto; }
+.routeSelectHeader { height: 80px; }
+.routeSelectHeader > button { border: 0; background: transparent; cursor: pointer; font-size: 18px; }
+.routeSelectBrand > span { width: 45px; height: 45px; border-radius: 14px; font-size: 22px; }
+.routeSelectBrand strong { font-size: 23px; }
+.routeSelectHero { position: relative; z-index: 2; width: min(1540px, calc(100% - 72px)); margin: 48px auto 32px; display: grid; grid-template-columns: .7fr 1.3fr; gap: 54px; align-items: start; }
+.routeSelectIntro { padding-top: 24px; }
+.routeSelectIntro > small { color: #6f7d80; font-size: 9px; font-weight: 900; letter-spacing: .15em; }
+.routeSelectIntro h1 { margin: 13px 0 17px; font-family: "Fredoka", sans-serif; font-size: clamp(54px, 5vw, 78px); line-height: .91; }
+.routeSelectIntro p { max-width: 430px; margin: 0; color: #68767a; font-size: 14px; line-height: 1.6; font-weight: 700; }
+.selectedRoutePanel { overflow: hidden; border: 2px solid #273a41; border-radius: 26px; background: #fffef9; box-shadow: 0 11px 0 rgba(30,44,50,.08); }
+.selectedRouteHead { min-height: 124px; display: grid; grid-template-columns: 98px 1fr auto; align-items: center; gap: 16px; padding: 16px 24px; border-top: 7px solid var(--select-route); border-bottom: 1px solid #ddd9cf; }
+.selectedRouteHead > div { min-width: 0; }
+.selectedRouteHead small { color: #768286; font-size: 8px; font-weight: 900; letter-spacing: .13em; }
+.selectedRouteHead h2 { margin: 2px 0 4px; font-family: "Fredoka", sans-serif; font-size: 36px; line-height: 1; }
+.selectedRouteHead p { margin: 0; color: #69777a; font-size: 10px; font-weight: 800; }
+.selectedRouteHead > b { min-width: 55px; height: 44px; display: grid; place-items: center; padding: 0 10px; border-radius: 13px; color: #fff; font-size: 9px; font-weight: 900; }
+.selectedRouteRecords { display: grid; grid-template-columns: repeat(4,1fr); background: #f4f2eb; border-bottom: 1px solid #ddd9cf; }
+.selectedRouteRecords > div { min-height: 88px; display: grid; align-content: center; padding: 12px 16px; border-right: 1px solid #d8d4ca; }
+.selectedRouteRecords > div:last-child { border: 0; }
+.selectedRouteRecords small { color: #7b8789; font-size: 7px; font-weight: 900; letter-spacing: .1em; }
+.selectedRouteRecords strong { margin-top: 6px; font-size: 22px; font-variant-numeric: tabular-nums; }
+.selectedRouteRecords strong span { color: #788588; font-size: 8px; }
+.terminalChoiceBlock { padding: 20px 22px 14px; }
+.terminalChoiceBlock > span { display: block; margin-bottom: 9px; color: #708084; font-size: 8px; font-weight: 900; letter-spacing: .13em; }
+.terminalChoices { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 10px; }
+.terminalChoices button { min-width: 0; min-height: 82px; display: grid; grid-template-columns: 48px 1fr 28px; align-items: center; gap: 10px; padding: 8px 12px 8px 8px; border: 1px solid #d1cec5; border-radius: 15px; background: #f7f5ef; cursor: pointer; text-align: left; }
+.terminalChoices button.is-selected { border: 3px solid var(--select-route); padding: 6px 10px 6px 6px; background: color-mix(in srgb, var(--select-route) 7%, white); }
+.terminalChoices i { width: 48px; height: 48px; display: grid; place-items: center; border-radius: 13px; color: #fff; font-style: normal; font-size: 8px; font-weight: 900; }
+.terminalChoices span { min-width: 0; }
+.terminalChoices span > * { display: block; }
+.terminalChoices small { color: #808b8d; font-size: 7px; font-weight: 900; letter-spacing: .1em; }
+.terminalChoices strong { margin-top: 2px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 13px; }
+.terminalChoices em { margin-top: 2px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; color: #738083; font-size: 8px; font-style: normal; font-weight: 800; }
+.terminalChoices button > b { font-size: 22px; }
+.routeStartButton { width: calc(100% - 44px); height: 72px; margin: 0 22px 22px; display: flex; align-items: stretch; justify-content: space-between; padding: 0; overflow: hidden; border: 0; border-radius: 16px; background: var(--select-route); color: #fff; cursor: pointer; box-shadow: inset 0 -5px 0 rgba(0,0,0,.15); text-align: left; }
+.routeStartButton > span { display: grid; align-content: center; padding-left: 20px; font-family: "Fredoka", sans-serif; font-size: 22px; font-weight: 700; }
+.routeStartButton small { max-width: 530px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-family: "Nunito Sans", sans-serif; font-size: 8px; font-weight: 900; letter-spacing: .07em; opacity: .82; }
+.routeStartButton > b { width: 76px; display: grid; place-items: center; border-left: 1px dashed rgba(255,255,255,.46); font-size: 31px; }
+.routeGridSection { position: relative; z-index: 2; width: min(1540px, calc(100% - 72px)); margin: 0 auto; padding: 26px 0 72px; border-top: 1px solid #d9d5cb; }
+.routeGridGroup + .routeGridGroup { margin-top: 21px; }
+.routeGridGroup h3 { margin: 0 0 9px; color: #6f7c80; font-size: 9px; font-weight: 900; letter-spacing: .13em; text-transform: uppercase; }
+.routeGrid { display: grid; grid-template-columns: repeat(5,minmax(0,1fr)); gap: 9px; }
+.routeTile { --tile-color: #047940; min-width: 0; height: 70px; display: grid; grid-template-columns: 44px minmax(0,1fr) 22px; align-items: center; gap: 9px; padding: 7px 10px 7px 7px; border: 1px solid #d6d2c8; border-radius: 15px; background: rgba(255,254,249,.91); cursor: pointer; text-align: left; }
+.routeTile.is-selected { border: 3px solid var(--tile-color); padding: 5px 8px 5px 5px; background: #fff; }
+.routeTile > i { width: 44px; height: 44px; display: grid; place-items: center; border-radius: 12px; background: var(--tile-color); color: #fff; font-style: normal; font-size: 8px; font-weight: 900; }
+.routeTile span { min-width: 0; }
+.routeTile strong, .routeTile small { display: block; }
+.routeTile strong { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 12px; }
+.routeTile small { margin-top: 2px; color: #899395; font-size: 8px; font-weight: 800; }
+.routeTile > b { color: #69777a; font-size: 16px; }
+
+@media (max-width: 1100px) {
+  .landingMain, .routeSelectHero { grid-template-columns: 1fr; gap: 28px; }
+  .landingMenu { max-width: 720px; }
+  .routeGrid { grid-template-columns: repeat(3,minmax(0,1fr)); }
+}
+
+@media (max-width: 760px) {
+  .landingHeader, .routeSelectHeader, .landingMain, .routeSelectHero, .routeGridSection { width: calc(100% - 28px); }
+  .landingHeaderActions .guestBadge { display: none; }
+  .landingBrand small { display: none; }
+  .landingMain { padding-top: 28px; }
+  .landingMenu h1 { font-size: 52px; }
+  .landingMenu > p { font-size: 14px; }
+  .landingSecondaryMenu { grid-template-columns: 1fr; }
+  .landingFeatureRoute { grid-template-columns: 90px 1fr; padding: 20px; }
+  .featureTrainFace { width: 78px; height: 96px; font-size: 42px; border-radius: 26px 26px 18px 18px; }
+  .landingFeatureRoute h2 { font-size: 38px; }
+  .landingFeatureStats { grid-template-columns: 1fr; }
+  .landingFeatureStats > div { min-height: 68px; border-right: 0; border-bottom: 1px solid #d8d4ca; }
+  .landingFooter { display: none; }
+  .recordRow { grid-template-columns: 42px 1fr; }
+  .recordRow > b, .recordRow > em { grid-column: 2; text-align: left; }
+  .routeSelectBrand { display: none; }
+  .routeSelectHero { margin-top: 26px; }
+  .routeSelectIntro h1 { font-size: 48px; }
+  .selectedRouteHead { grid-template-columns: 72px 1fr; padding: 13px; }
+  .selectedRouteHead > b { display: none; }
+  .selectedRouteHead h2 { font-size: 30px; }
+  .selectedRouteRecords { grid-template-columns: repeat(2,1fr); }
+  .selectedRouteRecords > div:nth-child(2) { border-right: 0; }
+  .selectedRouteRecords > div:nth-child(-n+2) { border-bottom: 1px solid #d8d4ca; }
+  .terminalChoices { grid-template-columns: 1fr; }
+  .routeGrid { grid-template-columns: 1fr 1fr; }
+}
+
+
+/* =========================================================
+   STESEN v9 - single-player, numbered network, cleaner UI
+   ========================================================= */
+
+/* Typography */
+.simpleTopButton,
+.mapRouteTag strong,
+.dockSide strong,
+.timeReadout strong,
+.speedReadout strong,
+.accuracyReadout strong,
+.transferChoices button span,
+.arrivalWords h2,
+.arrivalWords p,
+.routeSelectIntroV9 h1,
+.selectedRouteHeadV9 h2,
+.landingTextAction,
+.landingBrandV9 strong,
+.routeSelectBrandV9 strong,
+.typingTrace {
+  font-family: "Bricolage Grotesque", "Manrope", sans-serif;
+}
+
+/* Landing: only the rail sketch + two simple actions */
+.landingShellV9 { min-height: 100vh; background: #fbfaf5; }
+.landingNetworkSvg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  opacity: .42;
+}
+.landingTrack { fill: none; stroke-width: 15; stroke-linecap: round; stroke-linejoin: round; }
+.trackKajang { stroke: #047940; }
+.trackPutrajaya { stroke: #ffcd00; }
+.trackKelana { stroke: #d50032; }
+.trackAmpang { stroke: #e57200; }
+.trackMono { stroke: #84bd00; }
+.trackKomuter { stroke: #1f5aa6; }
+.trackShah { stroke: #58b7d9; }
+.landingHeaderV9 { width: min(1540px, calc(100% - 72px)); height: 104px; border-bottom: 1px solid rgba(36,53,60,.15); }
+.landingBrandV9 { display: flex; align-items: center; gap: 12px; }
+.landingTrainLogo { width: 60px; height: 60px; display: grid; place-items: center; }
+.landingBrandV9 strong { font-size: 34px; line-height: 1; letter-spacing: .14em; font-weight: 800; }
+.landingMenuV9 {
+  position: relative;
+  z-index: 4;
+  width: min(1540px, calc(100% - 72px));
+  min-height: calc(100vh - 190px);
+  margin: 0 auto;
+  display: grid;
+  align-content: center;
+  justify-items: start;
+  gap: 8px;
+}
+.landingTextAction {
+  min-width: 420px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 80px;
+  padding: 8px 0;
+  border: 0;
+  border-bottom: 2px solid rgba(31,48,56,.18);
+  background: transparent;
+  cursor: pointer;
+  color: #203039;
+  text-align: left;
+  font-size: clamp(48px, 5.3vw, 82px);
+  line-height: 1.02;
+  font-weight: 650;
+  letter-spacing: -.045em;
+}
+.landingTextAction b { font-family: "Manrope", sans-serif; font-size: .62em; transition: transform .15s ease; }
+.landingTextAction:hover { border-color: #203039; }
+.landingTextAction:hover b { transform: translateX(8px); }
+.landingTextPrimary { color: #0d7547; }
+.landingFooterV9 {
+  position: absolute;
+  z-index: 4;
+  left: 36px;
+  right: 36px;
+  bottom: 22px;
+  display: flex;
+  justify-content: space-between;
+  color: #7c888b;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: .14em;
+}
+
+/* Route picker */
+.routeSelectHeaderV9 { width: min(1540px, calc(100% - 72px)); }
+.routeSelectHeaderV9 > button { border: 0; background: transparent; cursor: pointer; font-size: 17px; }
+.routeSelectBrandV9 { display: flex; align-items: center; gap: 6px; }
+.routeSelectBrandV9 strong { font-size: 24px; letter-spacing: .13em; }
+.routeSelectHeroV9 { width: min(1540px, calc(100% - 72px)); }
+.routeSelectIntroV9 h1 { font-size: clamp(54px, 5vw, 78px); line-height: .95; letter-spacing: -.045em; font-weight: 680; }
+.routeSelectIntroV9 p { max-width: 450px; font-size: 14px; }
+.selectedRoutePanelV9 { border-radius: 24px; }
+.selectedRouteHeadV9 h2 { font-size: 36px; letter-spacing: -.025em; }
+.officialRouteNumber,
+.routeNumberTile {
+  border-radius: 50% !important;
+  font-family: "Bricolage Grotesque", sans-serif;
+  font-weight: 800 !important;
+}
+.officialRouteNumber { min-width: 58px; width: auto !important; height: 58px !important; padding: 0 12px; display: grid; place-items: center; color: #fff; font-size: 17px !important; }
+.routeNumberTile { width: 46px !important; height: 46px !important; font-size: 13px !important; }
+.routeGridSectionV9 { padding-bottom: 72px; }
+
+/* Map route hint: route number is the hero */
+.mapRouteTag { min-height: 70px; padding: 8px 20px 8px 8px; gap: 14px; background: rgba(255,253,248,.92); }
+.mapRouteNumber { width: 54px !important; height: 54px !important; border-radius: 50% !important; font-family: "Bricolage Grotesque", sans-serif; font-size: 17px !important; }
+.mapRouteTag small { font-size: 9px; }
+.mapRouteTag strong { font-size: 18px; }
+.mapZoom button { width: 58px; height: 54px; font-size: 25px; }
+
+/* Numbered station markers, based on the station numbers shown on the integrated map. */
+.stesen-map-station {
+  width: 28px;
+  height: 28px;
+  display: grid;
+  place-items: center;
+  border: 2.5px solid #fffdf8;
+  outline: 2px solid var(--station-color);
+  border-radius: 50%;
+  background: var(--station-color);
+  color: var(--station-text, #fff);
+  box-shadow: 0 2px 5px rgba(28,45,51,.15);
+  font-family: "Bricolage Grotesque", sans-serif;
+  font-size: 10px;
+  line-height: 1;
+  font-weight: 800;
+  letter-spacing: -.03em;
+}
+.stesen-map-station.is-complete { filter: saturate(.92); }
+.stesen-map-station.is-interchange {
+  width: 31px;
+  height: 31px;
+  outline-width: 3px;
+  box-shadow: 0 0 0 4px rgba(255,253,248,.96), 0 0 0 6px rgba(32,48,56,.24), 0 3px 8px rgba(28,45,51,.16);
+}
+.stesen-map-station.is-current { width: 32px; height: 32px; font-size: 11px; }
+.stesen-map-station.is-train-here { opacity: 0; }
+.stesen-map-label { font-size: 11px; font-weight: 750; }
+.stesen-map-label.is-near { font-size: 13px; font-weight: 800; }
+.stesen-train-marker, .stesen-map-train { width: 94px; height: 94px; }
+
+/* Bigger central stats */
+.centerTimer {
+  width: 520px;
+  height: 82px;
+  bottom: 248px;
+  grid-template-columns: 104px 1px 1fr 1px 104px;
+}
+.speedReadout small, .timeReadout small, .accuracyReadout small { font-size: 8px; }
+.speedReadout strong, .timeReadout strong, .accuracyReadout strong { font-size: 31px; }
+
+/* Typing ticket */
+.typingDock {
+  height: 208px;
+  grid-template-columns: minmax(290px, .78fr) minmax(760px, 2.15fr) minmax(290px, .78fr);
+}
+.dockMain { height: 208px; grid-template-columns: 104px minmax(0,1fr); padding: 15px 36px 17px; }
+.dockSide { padding: 26px 32px; }
+.dockSide small { font-size: 11px; }
+.dockSide strong { margin-top: 8px; font-size: 27px; line-height: 1.06; font-weight: 650; }
+.typingMeta small { font-size: 10px; }
+.lineBadge { min-width: 38px; height: 28px; padding: 0 8px; border-radius: 999px; font-size: 10px; }
+.traceBox { min-height: 142px; }
+.typingTrace { line-height: .91; font-weight: 650; letter-spacing: -.04em; }
+.traceCorrect { font-weight: 700; }
+.traceSizeLg { font-size: 73px; }
+.traceSizeMd { font-size: 62px; }
+.traceSizeSm { font-size: 52px; }
+.traceSizeXs { font-size: 43px; }
+.traceSizeXxs { font-size: 35px; letter-spacing: -.045em; }
+
+/* Transfer chooser: line only; direction is picked by the game. */
+.transferTray {
+  bottom: 356px;
+  width: min(1380px, calc(100% - 70px));
+  min-height: 118px;
+  grid-template-columns: 190px minmax(0,1fr);
+  grid-template-rows: auto auto;
+  gap: 12px 18px;
+  padding: 16px 18px;
+  border-radius: 24px;
+}
+.transferCopy { align-self: start; padding-top: 7px; }
+.transferCopy small { font-size: 10px; }
+.transferCopy strong { margin-top: 5px; font-size: 19px; line-height: 1.1; white-space: normal; }
+.transferChoices {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+  gap: 10px;
+  overflow: visible;
+}
+.transferChoices button {
+  min-width: 0;
+  height: 68px;
+  grid-template-columns: 46px minmax(0,1fr);
+  column-gap: 12px;
+  padding: 8px 14px 8px 9px;
+  border-radius: 17px;
+}
+.transferChoices button > i {
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  font-family: "Bricolage Grotesque", sans-serif;
+  font-size: 12px;
+}
+.transferChoices button span { max-width: none; font-size: 16px; line-height: 1; }
+.transferChoices button small { max-width: none; margin-top: 3px; font-size: 9px; }
+.enterHint {
+  grid-column: 2;
+  justify-self: end;
+  font-size: 11px;
+}
+.enterHint kbd { min-width: 44px; height: 30px; font-size: 10px; }
+
+/* End board */
+.arrivalBoard { width: min(1240px, 100%); }
+.arrivalBoardTop { height: 96px; padding: 0 30px; }
+.arrivalRouteBadge { width: 58px; height: 58px; font-size: 15px; }
+.arrivalRoute strong { font-size: 25px; }
+.arrivalClock { font-family: "Bricolage Grotesque", sans-serif; font-size: 44px; }
+.arrivalMessage { min-height: 360px; grid-template-columns: 180px minmax(0,1fr); padding: 44px 62px; }
+.arrivalWords small { font-size: 17px; }
+.arrivalWords h2 { font-size: clamp(70px, 7.4vw, 112px); line-height: .92; font-weight: 650; letter-spacing: -.045em; }
+.arrivalWords p { font-size: 64px; }
+.arrivalStats strong { font-family: "Bricolage Grotesque", sans-serif; font-size: 50px; }
+.arrivalActions button { height: 78px; font-size: 21px; }
+
+@media (max-width: 1180px) {
+  .landingTextAction { min-width: 330px; }
+  .typingDock { grid-template-columns: 210px minmax(0,1fr) 210px; }
+  .dockSide { padding: 20px; }
+  .dockSide strong { font-size: 20px; }
+  .dockMain { grid-template-columns: 78px minmax(0,1fr); gap: 14px; padding-left: 22px; padding-right: 22px; }
+  .transferTray { width: calc(100% - 32px); }
+}
+
+@media (max-width: 820px) {
+  .landingHeaderV9, .landingMenuV9 { width: calc(100% - 32px); }
+  .landingHeaderV9 { height: 82px; }
+  .landingTrainLogo { width: 48px; height: 48px; }
+  .landingBrandV9 strong { font-size: 26px; }
+  .landingTextAction { min-width: min(100%, 340px); gap: 30px; font-size: 50px; }
+  .landingFooterV9 { left: 16px; right: 16px; }
+  .routeSelectHeaderV9, .routeSelectHeroV9 { width: calc(100% - 28px); }
+  .centerTimer { bottom: 252px; width: min(430px, calc(100% - 20px)); }
+  .typingDock { height: 218px; grid-template-rows: 72px 146px; }
+  .dockMain { height: 146px; }
+  .dockSide strong { font-size: 16px; }
+  .traceSizeLg { font-size: 43px; }
+  .traceSizeMd { font-size: 37px; }
+  .traceSizeSm { font-size: 32px; }
+  .traceSizeXs { font-size: 27px; }
+  .traceSizeXxs { font-size: 23px; }
+  .transferTray { bottom: 390px; grid-template-columns: 1fr; max-height: 300px; overflow: auto; }
+  .transferChoices { grid-template-columns: 1fr 1fr; }
+  .enterHint { grid-column: 1; justify-self: start; }
+  .arrivalMessage { grid-template-columns: 90px minmax(0,1fr); min-height: 250px; padding: 24px 20px; }
+  .arrivalWords h2 { font-size: clamp(44px, 11vw, 64px); }
+  .arrivalWords p { font-size: 42px; }
+}
+
+/* =========================================================
+   STESEN v10 — route selection is the main full-screen card
+   ========================================================= */
+.routeSelectShellV10 {
+  min-height: 100vh;
+  overflow: hidden;
+  background: #f7f5ef;
+  padding: 0 36px 34px;
+}
+.routeSelectHeaderV10 {
+  width: min(1580px, 100%);
+  height: 96px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid rgba(32,48,57,.16);
+}
+.routeBackV10 {
+  min-height: 54px;
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  padding: 0 10px;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+  font-family: "Bricolage Grotesque", sans-serif;
+  font-size: 24px;
+  font-weight: 750;
+}
+.routeBackV10 span { font-size: 34px; line-height: 1; }
+.routeSelectBrandV10 { display: flex; align-items: center; gap: 9px; }
+.routeSelectBrandV10 strong {
+  font-family: "Bricolage Grotesque", sans-serif;
+  font-size: 31px;
+  letter-spacing: .13em;
+  font-weight: 800;
+}
+.routeSelectMainPanelV10 {
+  --panel-gap: 18px;
+  width: min(1580px, 100%);
+  height: calc(100vh - 126px);
+  min-height: 720px;
+  margin: 22px auto 0;
+  display: grid;
+  grid-template-rows: 142px 112px minmax(0,1fr);
+  overflow: hidden;
+  border: 2px solid #263940;
+  border-top: 7px solid var(--select-route);
+  border-radius: 30px;
+  background: #fffdf8;
+  box-shadow: 0 14px 0 rgba(33,48,55,.11);
+}
+.routeSelectTopV10 {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 22px;
+  padding: 18px 30px;
+  border-bottom: 1px solid #dcd8ce;
+}
+.selectedRouteIdentityV10 { min-width: 0; display: flex; align-items: center; gap: 18px; }
+.selectedRouteIdentityV10 > div { min-width: 0; }
+.selectedRouteIdentityV10 small,
+.routeLibraryHeadingV10 small,
+.journeySetupHeadingV10 small {
+  color: #738084;
+  font-size: 11px;
+  font-weight: 900;
+  letter-spacing: .16em;
+}
+.selectedRouteIdentityV10 h1 {
+  margin: 2px 0 0;
+  font-family: "Bricolage Grotesque", sans-serif;
+  font-size: 49px;
+  line-height: .95;
+  letter-spacing: -.035em;
+  font-weight: 760;
+}
+.selectedRouteIdentityV10 p {
+  margin: 8px 0 0;
+  color: #647277;
+  font-size: 14px;
+  font-weight: 750;
+}
+.selectedRouteIdentityV10 p span { padding: 0 6px; }
+.officialRouteNumberV10 {
+  min-width: 74px;
+  height: 74px;
+  display: grid;
+  place-items: center;
+  padding: 0 14px;
+  border-radius: 50%;
+  color: #fff;
+  font-family: "Bricolage Grotesque", sans-serif;
+  font-size: 22px;
+  line-height: 1;
+  font-weight: 850;
+}
+.selectedRouteRecordsV10 {
+  display: grid;
+  grid-template-columns: repeat(4,1fr);
+  border-bottom: 1px solid #dcd8ce;
+  background: #f4f1e9;
+}
+.selectedRouteRecordsV10 > div {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 18px 28px;
+  border-right: 1px solid #dcd8ce;
+}
+.selectedRouteRecordsV10 > div:last-child { border-right: 0; }
+.selectedRouteRecordsV10 small { color: #758185; font-size: 10px; font-weight: 900; letter-spacing: .08em; }
+.selectedRouteRecordsV10 strong {
+  margin-top: 7px;
+  font-family: "Bricolage Grotesque", sans-serif;
+  font-size: 31px;
+  line-height: 1;
+  font-weight: 750;
+  font-variant-numeric: tabular-nums;
+}
+.selectedRouteRecordsV10 strong span { font-family: "Manrope", sans-serif; font-size: 11px; }
+.routeSelectBodyV10 {
+  min-height: 0;
+  display: grid;
+  grid-template-columns: minmax(0,1.85fr) minmax(390px,.72fr);
+}
+.routeLibraryV10 {
+  min-width: 0;
+  min-height: 0;
+  padding: 24px 26px 28px;
+  overflow: auto;
+  border-right: 1px solid #dcd8ce;
+}
+.routeLibraryHeadingV10 { display: flex; align-items: end; justify-content: space-between; gap: 20px; margin-bottom: 20px; }
+.routeLibraryHeadingV10 h2,
+.journeySetupHeadingV10 h2 {
+  margin: 4px 0 0;
+  font-family: "Bricolage Grotesque", sans-serif;
+  font-size: 31px;
+  line-height: 1;
+  letter-spacing: -.025em;
+}
+.routeLibraryHeadingV10 > span { max-width: 330px; color: #718085; font-size: 12px; font-weight: 700; text-align: right; }
+.routeGroupsV10 { display: grid; gap: 21px; }
+.routeGridGroupV10 h3 { margin: 0 0 9px; color: #6c797d; font-size: 10px; letter-spacing: .14em; text-transform: uppercase; }
+.routeGridV10 { display: grid; grid-template-columns: repeat(4,minmax(0,1fr)); gap: 10px; }
+.routeTileV10 {
+  --tile-color: #203039;
+  min-width: 0;
+  min-height: 78px;
+  display: grid;
+  grid-template-columns: 52px minmax(0,1fr) 24px;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 12px;
+  border: 1px solid #d8d4ca;
+  border-radius: 17px;
+  background: #fffdf8;
+  cursor: pointer;
+  text-align: left;
+  transition: border-color .15s ease, background .15s ease, transform .15s ease;
+}
+.routeTileV10:hover { transform: translateY(-1px); border-color: var(--tile-color); }
+.routeTileV10.is-selected { border: 2px solid var(--tile-color); background: color-mix(in srgb, var(--tile-color) 7%, #fffdf8); }
+.routeNumberTileV10 {
+  width: 50px;
+  height: 50px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  color: #fff;
+  font-family: "Bricolage Grotesque", sans-serif;
+  font-size: 13px;
+  line-height: 1;
+  font-style: normal;
+  font-weight: 850;
+}
+.routeTileV10 > span { min-width: 0; }
+.routeTileV10 > span strong,
+.routeTileV10 > span small { display: block; }
+.routeTileV10 > span strong {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-family: "Bricolage Grotesque", sans-serif;
+  font-size: 16px;
+  line-height: 1.05;
+  font-weight: 720;
+}
+.routeTileV10 > span small { margin-top: 5px; color: #7e898c; font-size: 10px; font-weight: 750; }
+.routeTileV10 > b { justify-self: end; font-size: 18px; }
+.journeySetupV10 {
+  min-width: 0;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  padding: 26px;
+  background: #fbfaf5;
+}
+.journeySetupHeadingV10 { margin-bottom: 20px; }
+.terminalChoicesV10 { display: grid; gap: 12px; }
+.terminalChoicesV10 button {
+  min-height: 106px;
+  display: grid;
+  grid-template-columns: 58px minmax(0,1fr) 30px;
+  align-items: center;
+  gap: 14px;
+  padding: 13px 16px 13px 12px;
+  border: 1px solid #d6d1c7;
+  border-radius: 20px;
+  background: #fffdf8;
+  cursor: pointer;
+  text-align: left;
+}
+.terminalChoicesV10 button.is-selected { border: 2px solid var(--select-route); background: color-mix(in srgb, var(--select-route) 8%, #fffdf8); }
+.terminalChoicesV10 button > i {
+  width: 58px;
+  height: 58px;
+  display: grid;
+  place-items: center;
+  border-radius: 16px;
+  color: #fff;
+  font-style: normal;
+  font-size: 13px;
+  font-weight: 900;
+}
+.terminalChoicesV10 button span { min-width: 0; }
+.terminalChoicesV10 button span small,
+.terminalChoicesV10 button span strong,
+.terminalChoicesV10 button span em { display: block; }
+.terminalChoicesV10 button span small { color: #7d888b; font-size: 9px; font-weight: 900; letter-spacing: .1em; }
+.terminalChoicesV10 button span strong { margin-top: 2px; font-family: "Bricolage Grotesque", sans-serif; font-size: 20px; line-height: 1.03; font-weight: 750; }
+.terminalChoicesV10 button span em { margin-top: 5px; color: #647378; font-size: 11px; font-style: normal; font-weight: 700; }
+.terminalChoicesV10 button > b { justify-self: end; font-size: 25px; }
+.routeDataNoteV10 { margin: 16px 2px 0; color: #6c797d; font-size: 11px; line-height: 1.5; font-weight: 650; }
+.routeStartButtonV10 {
+  min-height: 84px;
+  width: 100%;
+  margin-top: auto;
+  display: flex;
+  align-items: stretch;
+  justify-content: space-between;
+  padding: 0;
+  border: 0;
+  border-radius: 20px;
+  overflow: hidden;
+  background: var(--select-route);
+  color: #fff;
+  cursor: pointer;
+  text-align: left;
+}
+.routeStartButtonV10 > span { min-width: 0; display: flex; flex-direction: column; justify-content: center; padding: 13px 18px; }
+.routeStartButtonV10 small { max-width: 310px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 10px; font-weight: 800; }
+.routeStartButtonV10 strong { margin-top: 3px; font-family: "Bricolage Grotesque", sans-serif; font-size: 25px; line-height: 1; }
+.routeStartButtonV10 > b { width: 74px; display: grid; place-items: center; border-left: 1px dashed rgba(255,255,255,.45); font-size: 30px; }
+
+/* Larger record board */
+.recordsDialog {
+  width: min(960px, calc(100% - 32px));
+  max-height: min(760px, calc(100vh - 44px));
+  padding: 34px;
+  border-radius: 28px;
+}
+.recordsHead small { font-size: 11px; }
+.recordsHead h2 { margin-top: 9px; font-size: 44px; line-height: 1; }
+.recordsHead > button { width: 48px; height: 48px; font-size: 29px; }
+.recordsEmpty { padding: 52px 28px; font-size: 17px; }
+.recordsList { gap: 11px; margin-top: 26px; }
+.recordRow {
+  min-height: 88px;
+  grid-template-columns: 58px minmax(0,1fr) 160px 190px;
+  gap: 16px;
+  padding: 12px;
+  border-radius: 18px;
+}
+.recordRow > i { width: 58px; height: 58px; border-radius: 15px; font-size: 12px; }
+.recordRow span strong { font-family: "Bricolage Grotesque", sans-serif; font-size: 19px; }
+.recordRow span small { margin-top: 4px; font-size: 11px; }
+.recordRow > b { font-family: "Bricolage Grotesque", sans-serif; font-size: 22px; }
+.recordRow > em { font-size: 13px; }
+
+@media (max-width: 1280px) {
+  .routeSelectShellV10 { padding-left: 20px; padding-right: 20px; }
+  .routeSelectMainPanelV10 { min-height: 700px; grid-template-rows: 130px 102px minmax(0,1fr); }
+  .routeSelectBodyV10 { grid-template-columns: minmax(0,1.5fr) minmax(350px,.75fr); }
+  .routeGridV10 { grid-template-columns: repeat(3,minmax(0,1fr)); }
+  .routeLibraryHeadingV10 > span { display: none; }
+}
+@media (max-width: 900px) {
+  .routeSelectShellV10 { overflow: auto; padding: 0 14px 24px; }
+  .routeSelectHeaderV10 { height: 78px; }
+  .routeBackV10 { font-size: 20px; }
+  .routeSelectBrandV10 strong { font-size: 24px; }
+  .routeSelectMainPanelV10 { height: auto; min-height: 0; grid-template-rows: auto auto auto; border-radius: 22px; }
+  .routeSelectTopV10 { padding: 14px 16px; }
+  .selectedRouteIdentityV10 h1 { font-size: 37px; }
+  .officialRouteNumberV10 { min-width: 58px; height: 58px; font-size: 16px; }
+  .selectedRouteRecordsV10 { grid-template-columns: 1fr 1fr; }
+  .selectedRouteRecordsV10 > div:nth-child(2) { border-right: 0; }
+  .selectedRouteRecordsV10 > div:nth-child(-n+2) { border-bottom: 1px solid #dcd8ce; }
+  .routeSelectBodyV10 { grid-template-columns: 1fr; }
+  .routeLibraryV10 { border-right: 0; border-bottom: 1px solid #dcd8ce; overflow: visible; }
+  .routeGridV10 { grid-template-columns: 1fr 1fr; }
+  .journeySetupV10 { min-height: 470px; }
+  .recordsDialog { padding: 24px 18px; }
+  .recordsHead h2 { font-size: 36px; }
+  .recordRow { grid-template-columns: 52px 1fr; }
+  .recordRow > b, .recordRow > em { grid-column: 2; text-align: left; }
+}
+@media (max-width: 560px) {
+  .routeGridV10 { grid-template-columns: 1fr; }
+  .selectedRouteRecordsV10 strong { font-size: 24px; }
+  .selectedRouteIdentityV10 p { font-size: 11px; }
+}
+
+/* =========================================================
+   STESEN v11 — route order + quieter typing HUD
+   ========================================================= */
+.routeGridUnifiedV11 {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  align-content: start;
+}
+.routeGridUnifiedV11 .routeTileV10 {
+  min-height: 86px;
+}
+.routeGridUnifiedV11 .routeTileV10 > span strong {
+  overflow: visible;
+  text-overflow: clip;
+  white-space: normal;
+  line-height: 1.08;
+}
+
+/* The station name itself is the typing target; no extra status strip above it. */
+.typingTargetWrap { display: flex; align-items: center; }
+.traceBox { width: 100%; }
+
+/* Transfer choices only appear after TAB. Continuing the current line is automatic. */
+.transferTrayAtStation .transferChoices {
+  align-items: stretch;
+}
+.transferTrayAtStation .transferChoices button {
+  min-height: 70px;
+}
+
+@media (max-width: 1280px) {
+  .routeGridUnifiedV11 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
+@media (max-width: 900px) {
+  .routeGridUnifiedV11 { grid-template-columns: 1fr 1fr; }
+}
+@media (max-width: 560px) {
+  .routeGridUnifiedV11 { grid-template-columns: 1fr; }
+}
+
+/* =========================================================
+   STESEN v12 — clearer interchange cue + national services
+   ========================================================= */
+
+/* Bigger game-side typography */
+.dockSide small { font-size: 12px; letter-spacing: .095em; }
+.dockSide strong {
+  font-family: "Bricolage Grotesque", "Manrope", sans-serif;
+  font-size: 30px;
+  line-height: 1.03;
+  font-weight: 760;
+  letter-spacing: -.02em;
+}
+.centerTimer {
+  width: 560px;
+  height: 88px;
+  bottom: 254px;
+}
+.speedReadout small, .timeReadout small, .accuracyReadout small { font-size: 9px; }
+.speedReadout strong, .timeReadout strong, .accuracyReadout strong { font-family: "Bricolage Grotesque", sans-serif; font-size: 34px; }
+
+/* A transfer is offered at the interchange itself, not at the next station. */
+.transferAvailableHint {
+  position: absolute;
+  z-index: 745;
+  left: 50%;
+  bottom: 356px;
+  transform: translateX(-50%);
+  min-width: 260px;
+  height: 58px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 13px;
+  padding: 0 20px;
+  border: 2px solid #263940;
+  border-radius: 17px;
+  background: rgba(255,253,248,.98);
+  color: #1d3038;
+  box-shadow: 0 8px 22px rgba(31,44,50,.13);
+  cursor: pointer;
+  font-family: "Bricolage Grotesque", sans-serif;
+  font-size: 17px;
+  font-weight: 800;
+}
+.transferAvailableHint kbd {
+  min-width: 54px;
+  height: 34px;
+  display: inline-grid;
+  place-items: center;
+  padding: 0 10px;
+  border: 1px solid #aeb6b3;
+  border-bottom-width: 3px;
+  border-radius: 9px;
+  background: #f3f1ea;
+  font: 850 12px/1 "Manrope", sans-serif;
+}
+.traceArrivedStation { color: #1b3038; font-weight: 790; }
+
+/* Transfer panel is intentionally large and readable. */
+.transferTray {
+  width: min(1480px, calc(100% - 54px));
+  min-height: 132px;
+  padding: 18px 22px;
+}
+.transferCopy small { font-size: 11px; }
+.transferCopy strong { font-size: 22px; }
+.transferChoices button { min-height: 78px; }
+.transferChoices button span { font-size: 18px; }
+.transferChoices button small { font-size: 10px; }
+.enterHint { font-size: 13px; }
+.enterHint kbd { min-width: 48px; height: 32px; font-size: 11px; }
+
+/* Settings */
+.settingsPopover { width: 390px; padding: 18px 20px; }
+.settingsPopoverHead strong { font-family: "Bricolage Grotesque", sans-serif; font-size: 25px; }
+.settingRow strong { font-size: 16px; }
+.settingRow small { margin-top: 4px; font-size: 12px; }
+.settingRow > button { min-width: 96px; height: 42px; font-size: 12px; }
+
+/* Route selector: no explanatory side copy, larger line names. */
+.routeLibraryHeadingV10 h2, .journeySetupHeadingV10 h2 { font-size: 36px; }
+.routeGridUnifiedV11 .routeTileV10 { min-height: 96px; }
+.routeTileV10 { grid-template-columns: 56px minmax(0,1fr) 25px; gap: 13px; padding: 11px 13px; }
+.routeNumberTileV10 { width: 54px; height: 54px; font-size: 13px; }
+.routeTileV10 > span strong { font-size: 18px; line-height: 1.08; }
+.routeTileV10 > span small { font-size: 11px; }
+.selectedRouteIdentityV10 h1 { font-size: 54px; }
+.selectedRouteIdentityV10 p { font-size: 15px; }
+.selectedRouteRecordsV10 small { font-size: 11px; }
+.selectedRouteRecordsV10 strong { font-size: 35px; }
+.terminalChoicesV10 button span strong { font-size: 23px; }
+.terminalChoicesV10 button span em { font-size: 12px; }
+
+/* Completion board: make the arrival message unmistakable. */
+.arrivalBoard { width: min(1320px, calc(100% - 32px)); }
+.arrivalBoardTop { height: 108px; }
+.arrivalRoute small { font-size: 10px; }
+.arrivalRoute strong { font-size: 32px; }
+.arrivalRouteBadge { width: 64px; height: 64px; font-size: 16px; }
+.arrivalClock { font-size: 50px; }
+.arrivalMessage { min-height: 390px; grid-template-columns: 190px minmax(0,1fr); gap: 38px; padding: 44px 64px; }
+.arrivalWords small {
+  display: block;
+  color: #d7dee0;
+  font-family: "Bricolage Grotesque", sans-serif;
+  font-size: 31px;
+  line-height: 1;
+  font-weight: 800;
+  letter-spacing: .07em;
+}
+.arrivalWords h2 {
+  margin-top: 15px;
+  font-family: "Bricolage Grotesque", sans-serif;
+  font-size: clamp(82px, 8vw, 126px);
+  font-weight: 760;
+  letter-spacing: -.055em;
+}
+.arrivalWords p { display: none; }
+.arrivalLineStrip > strong { font-size: 15px; }
+.arrivalTerminal { font-size: 11px; }
+.arrivalStats small { font-size: 14px; }
+.arrivalStats strong { font-size: 54px; }
+
+/* Record dialog stays legible when routes have long names. */
+.recordsHead h2 { font-size: 48px; }
+.recordRow { min-height: 98px; grid-template-columns: 62px minmax(0,1fr) 170px 205px; }
+.recordRow > i { width: 62px; height: 62px; font-size: 12px; }
+.recordRow span strong { font-size: 21px; line-height: 1.05; }
+.recordRow span small { font-size: 12px; }
+.recordRow > b { font-size: 24px; }
+.recordRow > em { font-size: 14px; }
+
+@media (max-width: 900px) {
+  .transferAvailableHint { bottom: 330px; min-width: 220px; height: 52px; font-size: 15px; }
+  .dockSide strong { font-size: 19px; }
+  .routeLibraryHeadingV10 h2, .journeySetupHeadingV10 h2 { font-size: 31px; }
+  .routeTileV10 > span strong { font-size: 16px; }
+  .arrivalWords small { font-size: 21px; }
+  .arrivalWords h2 { font-size: clamp(48px, 12vw, 72px); }
+  .recordRow { grid-template-columns: 54px 1fr; }
+}
+
+/* v12.1 — explicit interchange hint */
+.transferAvailableHint {
+  min-width: min(440px, calc(100% - 40px));
+  height: 64px;
+  padding: 0 24px;
+  font-size: 18px;
+}
+.transferAvailableHint span { white-space: nowrap; }
+@media (max-width: 700px) {
+  .transferAvailableHint { min-width: min(340px, calc(100% - 28px)); font-size: 15px; }
+  .transferAvailableHint span { white-space: normal; }
+}
+
+/* v12.2 — final readability pass */
+.routeLibraryHeadingV10 h2, .journeySetupHeadingV10 h2 { font-size: 40px; }
+.routeTileV10 > span strong { font-size: 20px; }
+.routeTileV10 > span small { font-size: 12px; }
+.terminalChoicesV10 button span strong { font-size: 25px; }
+.terminalChoicesV10 button span em { font-size: 13px; }
+.dockSide strong { font-size: 33px; }
+.dockSide small { font-size: 13px; }
+.arrivalWords small { font-size: 42px; font-weight: 850; letter-spacing: .055em; }
+.arrivalWords h2 { font-size: clamp(88px, 8.4vw, 136px); }
+.settingsPopoverHead strong { font-size: 28px; }
+.settingRow strong { font-size: 18px; }
+.settingRow small { font-size: 13px; }
+.transferCopy strong { font-size: 25px; }
+.transferChoices button span { font-size: 20px; }
+.enterHint { font-size: 14px; }
+@media (max-width: 900px) {
+  .dockSide strong { font-size: 21px; }
+  .routeTileV10 > span strong { font-size: 18px; }
+  .arrivalWords small { font-size: 26px; }
+}
+
+
+/* =========================================================
+   STESEN v13 — transfer-before-completion + cleaner route picker
+   ========================================================= */
+.routeLibraryHeadingV13 { display: block; margin-bottom: 22px; }
+.routeLibraryHeadingV13 h2 {
+  margin: 0;
+  font-family: "Bricolage Grotesque", sans-serif;
+  font-size: 48px;
+  line-height: .96;
+  font-weight: 800;
+  letter-spacing: -.04em;
+}
+.etsRouteGroupV13 {
+  margin-top: 30px;
+  padding-top: 25px;
+  border-top: 1px solid #dcd8ce;
+}
+.etsRouteGroupV13 h3 {
+  margin: 0 0 13px;
+  color: #243840;
+  font-family: "Bricolage Grotesque", sans-serif;
+  font-size: 27px;
+  line-height: 1;
+  font-weight: 790;
+  letter-spacing: -.025em;
+}
+.etsRouteGridV13 { grid-template-columns: repeat(3,minmax(0,1fr)); }
+.journeySetupHeadingV13 { margin-bottom: 22px; }
+.journeySetupHeadingV13 h2 {
+  margin: 0;
+  font-family: "Bricolage Grotesque", sans-serif;
+  font-size: 39px;
+  line-height: 1;
+  font-weight: 790;
+  letter-spacing: -.03em;
+}
+/* Bigger record labels */
+.selectedRouteRecordsV10 small {
+  font-size: 15px;
+  line-height: 1.1;
+  font-weight: 950;
+  letter-spacing: .06em;
+}
+.selectedRouteRecordsV10 strong { margin-top: 11px; }
+/* Interchange shortcut is visible while typing the interchange station itself. */
+.transferAvailableHint {
+  min-width: 238px;
+  height: 62px;
+  bottom: 354px;
+  gap: 14px;
+  font-size: 19px;
+}
+.transferAvailableHint span { font-weight: 850; }
+.transferTray .transferCopy small { font-size: 12px; }
+.transferTray .transferCopy strong { font-size: 26px; }
+.transferChoices button span { font-size: 20px; font-weight: 850; }
+.transferChoices button small { font-size: 11px; }
+.transferChoices button > i { font-size: 12px; font-weight: 900; }
+@media (max-width: 1280px) { .etsRouteGridV13 { grid-template-columns: repeat(2,minmax(0,1fr)); } }
+@media (max-width: 900px) {
+  .routeLibraryHeadingV13 h2 { font-size: 39px; }
+  .journeySetupHeadingV13 h2 { font-size: 32px; }
+  .etsRouteGridV13 { grid-template-columns: 1fr 1fr; }
+  .selectedRouteRecordsV10 small { font-size: 12px; }
+}
+@media (max-width: 560px) { .etsRouteGridV13 { grid-template-columns: 1fr; } }
+
+.selectedRouteRecordsV10 strong { font-size: 38px; }
+
+
+/* =========================================================
+   STESEN v14 — direct TAB cycling + consistent selection UI
+   ========================================================= */
+
+/* One friendly typeface throughout the selection and gameplay HUD. */
+.routeSelectShellV10,
+.routeSelectShellV10 button,
+.routeSelectShellV10 input,
+.stesenShell,
+.stesenShell button,
+.stesenShell input,
+.recordsDialog,
+.arrivalBoard {
+  font-family: "Nunito Sans", "Avenir Next", "Segoe UI", sans-serif;
+}
+.routeLibraryHeadingV13 h2,
+.journeySetupHeadingV13 h2,
+.selectedRouteIdentityV10 h1,
+.selectedRouteRecordsV10 strong,
+.routeTileV10 > span strong,
+.terminalChoicesV10 button span strong,
+.routeStartTextV14 strong,
+.dockSide strong,
+.typingTrace,
+.speedReadout strong,
+.timeReadout strong,
+.accuracyReadout strong {
+  font-family: "Nunito Sans", "Avenir Next", "Segoe UI", sans-serif;
+}
+
+/* The two selection headings now share the same typographic hierarchy. */
+.routeLibraryHeadingV13 h2,
+.journeySetupHeadingV13 h2 {
+  font-size: 43px;
+  line-height: 1;
+  font-weight: 900;
+  letter-spacing: -.035em;
+}
+
+/* Wider, calmer route cards. No decorative north-east arrows. */
+.routeGridUnifiedV11 { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
+.routeGridUnifiedV11 .routeTileV10 { min-height: 100px; }
+.routeTileV10 {
+  grid-template-columns: 58px minmax(0, 1fr);
+  gap: 15px;
+  padding: 13px 16px 13px 13px;
+}
+.routeTileV10 > b { display: none; }
+.routeTileV10 > span strong {
+  display: -webkit-box;
+  overflow: hidden;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  white-space: normal;
+  font-size: 19px;
+  line-height: 1.05;
+  font-weight: 850;
+}
+.routeTileV10 > span small { margin-top: 6px; font-size: 12px; }
+.etsRouteGridV13 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+
+/* Direction cards no longer carry decorative arrows either. */
+.terminalChoicesV10 button {
+  grid-template-columns: 62px minmax(0,1fr);
+  min-height: 112px;
+  padding: 15px 18px 15px 14px;
+}
+.terminalChoicesV10 button > b { display: none; }
+.terminalChoicesV10 button span strong { font-size: 25px; font-weight: 850; }
+.terminalChoicesV10 button span em { font-size: 13px; }
+
+/* "Mula perjalanan" is a simple action, not another card. */
+.routeStartTextV14 {
+  width: max-content;
+  min-height: 0;
+  margin: auto 0 7px;
+  padding: 12px 2px 5px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 4px;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  color: var(--select-route);
+  box-shadow: none;
+  overflow: visible;
+  cursor: pointer;
+  text-align: left;
+}
+.routeStartTextV14:hover strong { text-decoration: underline; text-decoration-thickness: 3px; text-underline-offset: 6px; }
+.routeStartTextV14 strong {
+  font-size: 31px;
+  line-height: 1;
+  font-weight: 900;
+  letter-spacing: -.025em;
+}
+.routeStartTextV14 small {
+  order: 2;
+  max-width: 340px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  color: #69787c;
+  font-size: 12px;
+  font-weight: 750;
+}
+
+/* TAB cycles departure lines directly. Only the key + coloured line dots remain. */
+.transferCycleHintV14 {
+  position: absolute;
+  z-index: 760;
+  left: 50%;
+  bottom: 354px;
+  transform: translateX(-50%);
+  min-height: 58px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 8px 13px;
+  border: 1.5px solid rgba(33,52,59,.44);
+  border-radius: 999px;
+  background: rgba(255,253,248,.96);
+  box-shadow: 0 9px 24px rgba(31,44,50,.13);
+}
+.transferCycleHintV14 > kbd {
+  min-width: 55px;
+  height: 34px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 900;
+}
+.transferCycleDotsV14 { display: flex; align-items: center; gap: 8px; }
+.transferCycleDotsV14 button {
+  --transfer-dot: #203039;
+  width: 35px;
+  height: 35px;
+  display: grid;
+  place-items: center;
+  padding: 0;
+  border: 3px solid #fffdf8;
+  outline: 1.5px solid color-mix(in srgb, var(--transfer-dot) 68%, #25383f);
+  border-radius: 50%;
+  background: var(--transfer-dot);
+  color: #fff;
+  cursor: pointer;
+  font-size: 9px;
+  line-height: 1;
+  font-weight: 900;
+  transition: transform .12s ease, box-shadow .12s ease;
+}
+.transferCycleDotsV14 button.is-selected {
+  transform: scale(1.18);
+  box-shadow: 0 0 0 3px #fffdf8, 0 0 0 6px var(--transfer-dot);
+}
+
+/* Keep station disc behind the cute train; the train is always the foreground marker. */
+.stesen-map-station.is-train-here { opacity: 1; }
+.stesen-train-marker,
+.stesen-map-train { position: relative; z-index: 20; }
+
+@media (max-width: 1280px) {
+  .routeGridUnifiedV11 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .routeLibraryHeadingV13 h2,
+  .journeySetupHeadingV13 h2 { font-size: 37px; }
+  .etsRouteGridV13 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 900px) {
+  .routeGridUnifiedV11 { grid-template-columns: 1fr 1fr; }
+  .transferCycleHintV14 { bottom: 328px; }
+}
+@media (max-width: 560px) {
+  .routeGridUnifiedV11 { grid-template-columns: 1fr; }
+  .routeStartTextV14 strong { font-size: 27px; }
+  .transferCycleHintV14 { max-width: calc(100% - 24px); gap: 9px; }
+  .transferCycleDotsV14 { gap: 6px; overflow-x: auto; padding: 4px 2px; }
+}
+
+
+/* =========================================================
+   STESEN v15 — live TAB switching + cleaner direction panel
+   ========================================================= */
+.journeySetupNoHeadingV15 { padding-top: 32px; }
+.journeySetupNoHeadingV15 .terminalChoicesV10 { margin-top: 0; }
+.etsRouteGridV13 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.transferCycleDotsV14 button { font-size: 0; }
+@media (max-width: 1280px) {
+  .etsRouteGridV13 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 700px) {
+  .etsRouteGridV13 { grid-template-columns: 1fr; }
+}
+
+/* =========================================================
+   STESEN v16 — normalized 100% scale + touch-first mobile UI
+   This block intentionally overrides older sizing experiments.
+   ========================================================= */
+
+/* One type system everywhere. */
+.landingShellV9,
+.landingShellV9 button,
+.routeSelectShellV10,
+.routeSelectShellV10 button,
+.stesenShell,
+.stesenShell button,
+.stesenShell input,
+.recordsDialog,
+.arrivalBoard {
+  font-family: "Nunito Sans", "Avenir Next", "Segoe UI", sans-serif;
+}
+
+/* ---------- Landing: compact at normal browser zoom ---------- */
+.landingHeaderV9 {
+  width: min(1240px, calc(100% - 48px));
+  height: 78px;
+}
+.landingTrainLogo { width: 48px; height: 48px; }
+.landingBrandV9 { gap: 9px; }
+.landingBrandV9 strong { font-size: 27px; letter-spacing: .13em; }
+.landingMenuV9 {
+  width: min(1240px, calc(100% - 48px));
+  min-height: calc(100vh - 138px);
+  gap: 4px;
+}
+.landingTextAction {
+  min-width: 310px;
+  gap: 44px;
+  padding: 5px 0;
+  font-size: clamp(42px, 4vw, 60px);
+  line-height: 1;
+  font-weight: 800;
+}
+.landingFooterV9 {
+  left: max(24px, calc((100vw - 1240px) / 2));
+  right: max(24px, calc((100vw - 1240px) / 2));
+  bottom: 15px;
+  font-size: 8px;
+}
+.landingTrack { stroke-width: 11; opacity: .78; }
+
+/* ---------- Route selection: 75%-ish visual density at 100% zoom ---------- */
+.routeSelectShellV10 {
+  padding: 0 24px 22px;
+  overflow: auto;
+}
+.routeSelectHeaderV10 {
+  width: min(1240px, 100%);
+  height: 72px;
+}
+.routeBackV10 {
+  min-height: 44px;
+  gap: 8px;
+  padding: 0 4px;
+  font-size: 17px;
+  font-weight: 900;
+}
+.routeBackV10 span { font-size: 25px; }
+.routeSelectBrandV10 { gap: 6px; }
+.routeSelectBrandV10 strong { font-size: 24px; letter-spacing: .12em; font-weight: 900; }
+
+.routeSelectMainPanelV10 {
+  width: min(1240px, 100%);
+  height: calc(100vh - 94px);
+  min-height: 610px;
+  margin-top: 14px;
+  grid-template-rows: 106px 82px minmax(0,1fr);
+  border-width: 1.5px;
+  border-top-width: 5px;
+  border-radius: 22px;
+  box-shadow: 0 8px 0 rgba(33,48,55,.08);
+}
+.routeSelectTopV10 { gap: 16px; padding: 12px 20px; }
+.selectedRouteIdentityV10 { gap: 12px; }
+.selectedRouteIdentityV10 h1 {
+  margin-top: 1px;
+  font-family: inherit;
+  font-size: 36px;
+  line-height: .98;
+  font-weight: 900;
+}
+.selectedRouteIdentityV10 p { margin-top: 5px; font-size: 11px; }
+.officialRouteNumberV10 {
+  min-width: 54px;
+  height: 54px;
+  padding: 0 10px;
+  font-family: inherit;
+  font-size: 16px;
+}
+.selectedRouteRecordsV10 > div { padding: 11px 18px; }
+.selectedRouteRecordsV10 small {
+  font-size: 10px;
+  line-height: 1;
+  letter-spacing: .055em;
+  font-weight: 900;
+}
+.selectedRouteRecordsV10 strong {
+  margin-top: 7px;
+  font-family: inherit;
+  font-size: 26px;
+  font-weight: 900;
+}
+.selectedRouteRecordsV10 strong span { font-family: inherit; font-size: 9px; }
+.routeSelectBodyV10 { grid-template-columns: minmax(0,1.8fr) minmax(300px,.68fr); }
+.routeLibraryV10 { padding: 18px 20px 22px; }
+.routeLibraryHeadingV13 { margin-bottom: 14px; }
+.routeLibraryHeadingV13 h2 {
+  font-family: inherit;
+  font-size: 34px;
+  font-weight: 900;
+  letter-spacing: -.035em;
+}
+.routeGridUnifiedV11,
+.etsRouteGridV13 { grid-template-columns: repeat(3,minmax(0,1fr)); gap: 8px; }
+.routeGridUnifiedV11 .routeTileV10,
+.routeTileV10 {
+  min-height: 72px;
+  grid-template-columns: 44px minmax(0,1fr);
+  gap: 10px;
+  padding: 8px 10px 8px 8px;
+  border-radius: 13px;
+}
+.routeNumberTileV10 { width: 42px; height: 42px; font-family: inherit; font-size: 10px; }
+.routeTileV10 > span strong {
+  font-family: inherit;
+  font-size: 15px;
+  line-height: 1.04;
+  font-weight: 900;
+}
+.routeTileV10 > span small { margin-top: 3px; font-size: 9px; }
+.etsRouteGroupV13 { margin-top: 18px; padding-top: 16px; }
+.etsRouteGroupV13 h3 { margin-bottom: 9px; font-family: inherit; font-size: 20px; font-weight: 900; }
+
+.journeySetupV10,
+.journeySetupNoHeadingV15 { padding: 20px; padding-top: 20px; }
+.terminalChoicesV10 { gap: 9px; }
+.terminalChoicesV10 button {
+  min-height: 78px;
+  grid-template-columns: 46px minmax(0,1fr);
+  gap: 10px;
+  padding: 9px 11px 9px 9px;
+  border-radius: 15px;
+}
+.terminalChoicesV10 button > i { width: 44px; height: 44px; border-radius: 12px; font-size: 10px; }
+.terminalChoicesV10 button span small { font-size: 7px; }
+.terminalChoicesV10 button span strong { font-family: inherit; font-size: 17px; line-height: 1.02; font-weight: 900; }
+.terminalChoicesV10 button span em { margin-top: 3px; font-size: 9px; }
+.routeStartTextV14 {
+  margin: auto 0 3px;
+  padding: 8px 0 3px;
+  gap: 2px;
+}
+.routeStartTextV14 strong { font-family: inherit; font-size: 23px; font-weight: 900; }
+.routeStartTextV14 small { max-width: 280px; font-size: 9px; }
+
+/* ---------- Records ---------- */
+.recordsDialog {
+  width: min(760px, calc(100% - 32px));
+  max-height: min(650px, calc(100vh - 32px));
+  padding: 24px;
+  border-radius: 20px;
+}
+.recordsHead small { font-size: 9px; }
+.recordsHead h2 { margin-top: 5px; font-family: inherit; font-size: 34px; font-weight: 900; }
+.recordsHead > button { width: 38px; height: 38px; font-size: 24px; }
+.recordsList { gap: 8px; margin-top: 18px; }
+.recordRow {
+  min-height: 66px;
+  grid-template-columns: 44px minmax(0,1fr) 125px 145px;
+  gap: 10px;
+  padding: 8px;
+  border-radius: 13px;
+}
+.recordRow > i { width: 44px; height: 44px; border-radius: 12px; font-size: 9px; }
+.recordRow span strong { font-family: inherit; font-size: 15px; font-weight: 900; }
+.recordRow span small { margin-top: 2px; font-size: 9px; }
+.recordRow > b { font-family: inherit; font-size: 17px; }
+.recordRow > em { font-size: 10px; }
+.recordsEmpty { padding: 34px 20px; font-size: 14px; }
+
+/* ---------- Gameplay: map remains full screen, overlays become compact ---------- */
+.stesenShell,
+.playfield,
+.networkStage { min-height: 100vh; }
+.simpleTopBar { height: 60px; padding: 0 20px; }
+.simpleTopButton {
+  height: 38px;
+  gap: 7px;
+  padding: 0 5px;
+  font-size: 15px;
+}
+.simpleTopButton span { font-size: 23px; }
+.simpleSettingsButton span { font-size: 21px; }
+.settingsPopover {
+  top: 52px;
+  right: 16px;
+  width: min(300px, calc(100vw - 24px));
+  padding: 13px 15px;
+  border-radius: 16px;
+}
+.settingsPopoverHead strong { font-family: inherit; font-size: 19px; }
+.settingRow strong { font-size: 13px; }
+.settingRow small { font-size: 10px; }
+.settingRow > button { min-width: 72px; height: 34px; font-size: 10px; }
+
+.mapRouteTag {
+  top: 62px;
+  left: 18px;
+  min-height: 46px;
+  gap: 8px;
+  padding: 5px 10px 5px 5px;
+  border-radius: 12px;
+}
+.mapRouteNumber { width: 36px !important; height: 36px !important; font-family: inherit; font-size: 11px !important; }
+.mapRouteTag small { font-size: 6px; }
+.mapRouteTag strong { font-size: 12px; }
+.mapZoom { top: 62px; right: 14px; border-radius: 11px; }
+.mapZoom button { width: 40px; height: 36px; font-size: 17px; }
+
+/* Station + train markers */
+.stesen-map-station { width: 22px; height: 22px; font-size: 8px; }
+.stesen-map-station.is-current { width: 25px; height: 25px; font-size: 9px; }
+.stesen-map-station.is-train-here { opacity: 0; }
+.stesen-map-label { font-size: 9px; }
+.stesen-map-label.is-near { font-size: 10px; }
+.stesen-train-marker,
+.stesen-map-train { width: 68px; height: 68px; }
+.stesen-map-train svg { width: 68px; height: 68px; }
+
+.centerTimer {
+  width: 410px;
+  height: 62px;
+  bottom: 180px;
+  grid-template-columns: 76px 1px 1fr 1px 78px;
+  gap: 9px;
+  padding: 6px 11px;
+  border-top-width: 4px;
+  border-radius: 15px 15px 11px 11px;
+}
+.centerTimer > i { height: 31px; }
+.speedReadout small,
+.timeReadout small,
+.accuracyReadout small { font-size: 6px; }
+.speedReadout strong,
+.timeReadout strong,
+.accuracyReadout strong { font-family: inherit; font-size: 24px; font-weight: 900; }
+.speedReadout span { font-size: 7px; }
+.accuracyReadout strong span { font-size: 9px; }
+
+.typingDock {
+  bottom: 14px;
+  width: min(1340px, calc(100% - 36px));
+  height: 150px;
+  grid-template-columns: minmax(210px,.68fr) minmax(550px,2fr) minmax(210px,.68fr);
+  border-radius: 22px;
+  box-shadow: 0 7px 0 rgba(31,44,50,.045), 0 15px 30px rgba(31,44,50,.11);
+}
+.typingDock::before,
+.typingDock::after { width: 22px; height: 43px; }
+.typingDock::before { left: -14px; }
+.typingDock::after { right: -14px; }
+.dockSide { gap: 10px; padding: 17px 20px; }
+.dockSide small { font-size: 8px; letter-spacing: .075em; }
+.dockSide strong {
+  margin-top: 5px;
+  font-family: inherit;
+  font-size: 19px;
+  line-height: 1.05;
+  font-weight: 900;
+}
+.dockArrow { width: 36px; height: 36px; font-size: 17px; }
+.dockMain {
+  height: 150px;
+  grid-template-columns: 72px minmax(0,1fr);
+  gap: 17px;
+  padding: 10px 24px 12px;
+  border-top-width: 5px;
+  border-radius: 19px 19px 15px 15px;
+}
+.traceBox { min-height: 105px; }
+.typingTrace { font-family: inherit; line-height: .94; font-weight: 800; }
+.traceCorrect { font-weight: 900; }
+.traceSizeLg { font-size: 52px; }
+.traceSizeMd { font-size: 45px; }
+.traceSizeSm { font-size: 39px; }
+.traceSizeXs { font-size: 34px; }
+.traceSizeXxs { font-size: 30px; }
+.traceCursor::after { bottom: -6px; height: 3px; }
+
+/* Desktop: keyboard hint + clickable line dots. */
+.transferCycleHintV14 {
+  bottom: 252px;
+  min-height: 46px;
+  gap: 10px;
+  padding: 6px 10px;
+  border-width: 1px;
+  box-shadow: 0 6px 16px rgba(31,44,50,.11);
+}
+.transferCycleHintV14 > kbd { min-width: 43px; height: 28px; font-size: 9px; }
+.transferCycleDotsV14 { gap: 7px; }
+.transferCycleDotsV14 button {
+  width: 29px;
+  height: 29px;
+  border-width: 2px;
+  outline-width: 1px;
+}
+.transferCycleDotsV14 button.is-selected {
+  transform: scale(1.12);
+  box-shadow: 0 0 0 2px #fffdf8, 0 0 0 4px var(--transfer-dot);
+}
+
+/* ---------- Completion: modal-sized at 100% zoom ---------- */
+.arrivalOverlay { padding: 18px; }
+.arrivalBoard {
+  width: min(880px, calc(100% - 24px));
+  max-height: calc(100vh - 36px);
+  overflow: auto;
+  border-width: 6px;
+  border-radius: 14px;
+}
+.arrivalBoardTop { height: 66px; padding: 0 17px; }
+.arrivalRoute { gap: 9px; }
+.arrivalRouteBadge { width: 40px; height: 40px; font-family: inherit; font-size: 10px; }
+.arrivalRoute small { font-size: 7px; }
+.arrivalRoute strong { font-size: 18px; font-weight: 900; }
+.journeyBadges i { width: 27px; height: 27px; font-size: 7px; }
+.arrivalClock { font-family: inherit; font-size: 27px; }
+.arrivalMessage {
+  min-height: 205px;
+  grid-template-columns: 90px minmax(0,1fr);
+  gap: 20px;
+  padding: 24px 32px;
+}
+.arrivalWords small { font-family: inherit; font-size: 18px; letter-spacing: .055em; }
+.arrivalWords h2 {
+  margin-top: 7px;
+  font-family: inherit;
+  font-size: clamp(46px, 5vw, 68px);
+  line-height: .95;
+  font-weight: 900;
+}
+.bestRibbon { top: 14px; right: 14px; font-size: 8px; }
+.arrivalLineStrip { height: 44px; padding: 0 18px; }
+.arrivalLineStrip > strong { font-size: 11px; }
+.arrivalTerminal { font-size: 8px; }
+.arrivalStats { gap: 7px; padding: 13px 14px 7px; }
+.arrivalStats > div { min-height: 72px; }
+.arrivalStats small { font-size: 9px; }
+.arrivalStats strong { font-family: inherit; font-size: 29px; }
+.arrivalStats strong span { font-size: 10px; }
+.bestTimeLine { padding: 0 16px 5px; font-size: 8px; }
+.arrivalActions { gap: 7px; padding: 7px 14px 14px; }
+.arrivalActions button { height: 50px; font-size: 14px; }
+
+/* ---------- Laptop / tablet ---------- */
+@media (max-width: 1180px) {
+  .routeSelectShellV10 { padding-left: 14px; padding-right: 14px; }
+  .routeSelectHeaderV10,
+  .routeSelectMainPanelV10 { width: min(980px, 100%); }
+  .routeSelectMainPanelV10 { height: auto; min-height: 0; grid-template-rows: auto auto auto; }
+  .routeSelectBodyV10 { grid-template-columns: minmax(0,1fr) 300px; }
+  .routeGridUnifiedV11,
+  .etsRouteGridV13 { grid-template-columns: repeat(2,minmax(0,1fr)); }
+  .typingDock {
+    width: calc(100% - 28px);
+    grid-template-columns: minmax(175px,.68fr) minmax(460px,1.8fr) minmax(175px,.68fr);
+  }
+  .dockSide { padding: 15px 14px; }
+  .dockSide strong { font-size: 16px; }
+  .traceSizeLg { font-size: 45px; }
+  .traceSizeMd { font-size: 40px; }
+  .traceSizeSm { font-size: 35px; }
+  .traceSizeXs { font-size: 31px; }
+  .traceSizeXxs { font-size: 27px; }
+}
+
+@media (max-width: 860px) {
+  .routeSelectHeaderV10 { height: 64px; }
+  .routeSelectMainPanelV10 { margin-top: 10px; }
+  .routeSelectTopV10 { padding: 10px 13px; }
+  .selectedRouteIdentityV10 h1 { font-size: 30px; }
+  .selectedRouteIdentityV10 p { font-size: 9px; }
+  .selectedRouteRecordsV10 { grid-template-columns: 1fr 1fr; }
+  .selectedRouteRecordsV10 > div { min-height: 68px; border-bottom: 1px solid #dcd8ce; }
+  .selectedRouteRecordsV10 > div:nth-child(even) { border-right: 0; }
+  .routeSelectBodyV10 { grid-template-columns: 1fr; }
+  .routeLibraryV10 { border-right: 0; border-bottom: 1px solid #dcd8ce; overflow: visible; }
+  .journeySetupV10,
+  .journeySetupNoHeadingV15 { min-height: 0; }
+  .terminalChoicesV10 { grid-template-columns: 1fr 1fr; }
+  .routeStartTextV14 { margin-top: 15px; }
+
+  .typingDock {
+    width: calc(100% - 20px);
+    height: 140px;
+    grid-template-columns: 165px minmax(0,1fr) 165px;
+  }
+  .dockMain { height: 140px; grid-template-columns: 64px minmax(0,1fr); gap: 12px; padding: 8px 15px 10px; }
+  .dockSide { padding: 12px 10px; }
+  .dockArrow { display: none; }
+  .dockSide strong { font-size: 15px; }
+  .centerTimer { bottom: 168px; width: 360px; height: 56px; }
+  .transferCycleHintV14 { bottom: 232px; }
+}
+
+/* ---------- Phone: touch-first game, no TAB affordance ---------- */
+@media (max-width: 640px) {
+  .landingHeaderV9 { width: calc(100% - 28px); height: 64px; }
+  .landingTrainLogo { width: 40px; height: 40px; }
+  .landingBrandV9 strong { font-size: 22px; }
+  .landingMenuV9 {
+    width: calc(100% - 32px);
+    min-height: calc(100svh - 112px);
+    align-content: center;
+  }
+  .landingTextAction { min-width: 230px; max-width: 85vw; gap: 26px; font-size: clamp(38px, 13vw, 50px); }
+  .landingFooterV9 { left: 16px; right: 16px; bottom: 11px; font-size: 7px; }
+  .landingTrack { stroke-width: 9; }
+
+  .routeSelectShellV10 { padding: 0 9px 16px; }
+  .routeSelectHeaderV10 { height: 58px; }
+  .routeBackV10 { font-size: 15px; }
+  .routeBackV10 span { font-size: 22px; }
+  .routeSelectBrandV10 strong { font-size: 20px; }
+  .routeSelectMainPanelV10 { border-radius: 17px; border-top-width: 4px; }
+  .routeSelectTopV10 { gap: 8px; padding: 9px 10px; }
+  .selectedRouteIdentityV10 { gap: 7px; }
+  .selectedRouteIdentityV10 h1 { font-size: 25px; }
+  .selectedRouteIdentityV10 p { display: none; }
+  .officialRouteNumberV10 { min-width: 44px; height: 44px; font-size: 13px; }
+  .selectedRouteRecordsV10 > div { min-height: 58px; padding: 8px 10px; }
+  .selectedRouteRecordsV10 small { font-size: 7px; }
+  .selectedRouteRecordsV10 strong { margin-top: 4px; font-size: 20px; }
+  .routeLibraryV10 { padding: 14px 12px 16px; }
+  .routeLibraryHeadingV13 { margin-bottom: 10px; }
+  .routeLibraryHeadingV13 h2 { font-size: 28px; }
+  .routeGridUnifiedV11,
+  .etsRouteGridV13 { grid-template-columns: 1fr; gap: 7px; }
+  .routeGridUnifiedV11 .routeTileV10,
+  .routeTileV10 { min-height: 62px; grid-template-columns: 38px minmax(0,1fr); padding: 7px; }
+  .routeNumberTileV10 { width: 36px; height: 36px; font-size: 9px; }
+  .routeTileV10 > span strong { font-size: 14px; }
+  .routeTileV10 > span small { font-size: 8px; }
+  .etsRouteGroupV13 { margin-top: 14px; padding-top: 12px; }
+  .etsRouteGroupV13 h3 { font-size: 18px; }
+  .journeySetupV10,
+  .journeySetupNoHeadingV15 { padding: 14px 12px 16px; }
+  .terminalChoicesV10 { grid-template-columns: 1fr; gap: 7px; }
+  .terminalChoicesV10 button { min-height: 64px; grid-template-columns: 39px minmax(0,1fr); padding: 7px; border-radius: 12px; }
+  .terminalChoicesV10 button > i { width: 37px; height: 37px; border-radius: 10px; font-size: 9px; }
+  .terminalChoicesV10 button span strong { font-size: 15px; }
+  .terminalChoicesV10 button span em { font-size: 8px; }
+  .routeStartTextV14 { margin-top: 12px; }
+  .routeStartTextV14 strong { font-size: 21px; }
+  .routeStartTextV14 small { font-size: 8px; }
+
+  .recordsDialog { width: calc(100% - 16px); max-height: calc(100svh - 16px); padding: 17px 13px; border-radius: 16px; }
+  .recordsHead h2 { font-size: 28px; }
+  .recordRow { grid-template-columns: 40px minmax(0,1fr); min-height: 62px; }
+  .recordRow > i { width: 40px; height: 40px; }
+  .recordRow > b,
+  .recordRow > em { grid-column: 2; text-align: left; }
+  .recordRow > b { font-size: 15px; }
+
+  .stesenShell,
+  .playfield,
+  .networkStage { height: 100svh; min-height: 540px; }
+  .simpleTopBar { height: 52px; padding: 0 10px; }
+  .simpleTopButton { height: 34px; font-size: 13px; }
+  .simpleTopButton span { font-size: 20px; }
+  .simpleSettingsButton span { font-size: 18px; }
+  .settingsPopover { top: 47px; right: 8px; width: min(280px, calc(100vw - 16px)); }
+
+  .mapRouteTag { top: 53px; left: 9px; min-height: 39px; }
+  .mapRouteNumber { width: 30px !important; height: 30px !important; font-size: 9px !important; }
+  .mapRouteTag small { font-size: 5px; }
+  .mapRouteTag strong { font-size: 10px; }
+  .mapZoom { top: 53px; right: 8px; }
+  .mapZoom button { width: 36px; height: 34px; font-size: 16px; }
+  .stesen-map-station { width: 18px; height: 18px; font-size: 7px; }
+  .stesen-map-station.is-current { width: 21px; height: 21px; font-size: 8px; }
+  .stesen-map-label { font-size: 8px; }
+  .stesen-map-label.is-near { font-size: 9px; }
+  .stesen-train-marker,
+  .stesen-map-train { width: 58px; height: 58px; }
+  .stesen-map-train svg { width: 58px; height: 58px; }
+
+  .typingDock {
+    bottom: 7px;
+    width: calc(100% - 14px);
+    height: 184px;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 112px 72px;
+    border-radius: 17px;
+  }
+  .typingDock::before,
+  .typingDock::after { display: none; }
+  .dockMain {
+    grid-column: 1 / 3;
+    grid-row: 1;
+    height: 112px;
+    grid-template-columns: 54px minmax(0,1fr);
+    gap: 8px;
+    padding: 7px 11px 8px;
+    border-top-width: 4px;
+    border-radius: 14px 14px 0 0;
+  }
+  .traceBox { min-height: 85px; }
+  .traceSizeLg { font-size: 34px; }
+  .traceSizeMd { font-size: 30px; }
+  .traceSizeSm { font-size: 27px; }
+  .traceSizeXs { font-size: 24px; }
+  .traceSizeXxs { font-size: 21px; }
+  .dockSide {
+    grid-row: 2;
+    gap: 0;
+    padding: 8px 10px;
+    border-top: 1px dashed #d7d2c7;
+  }
+  .dockPrevious { grid-column: 1; border-right: 1px dashed #d7d2c7; }
+  .dockNext { grid-column: 2; border-left: 0; }
+  .dockSide small { font-size: 6px; }
+  .dockSide strong { margin-top: 3px; font-size: 13px; -webkit-line-clamp: 2; }
+
+  .centerTimer {
+    bottom: 199px;
+    width: calc(100% - 30px);
+    max-width: 360px;
+    height: 52px;
+    grid-template-columns: 68px 1px 1fr 1px 70px;
+    gap: 6px;
+    padding: 5px 8px;
+    border-radius: 13px 13px 10px 10px;
+  }
+  .speedReadout strong,
+  .timeReadout strong,
+  .accuracyReadout strong { font-size: 20px; }
+
+  /* Mobile transfer is touch-only: no keyboard key is shown. */
+  .transferCycleHintV14 {
+    bottom: 259px;
+    min-height: 50px;
+    max-width: calc(100% - 20px);
+    gap: 0;
+    padding: 5px 8px;
+  }
+  .transferCycleHintV14 > kbd { display: none; }
+  .transferCycleDotsV14 { gap: 10px; overflow-x: auto; padding: 5px; scrollbar-width: none; }
+  .transferCycleDotsV14::-webkit-scrollbar { display: none; }
+  .transferCycleDotsV14 button {
+    width: 40px;
+    height: 40px;
+    flex: 0 0 40px;
+    outline-width: 1px;
+    touch-action: manipulation;
+  }
+  .transferCycleDotsV14 button.is-selected {
+    transform: scale(1.08);
+    box-shadow: 0 0 0 2px #fffdf8, 0 0 0 4px var(--transfer-dot);
+  }
+
+  .arrivalOverlay { padding: 8px; align-items: center; }
+  .arrivalBoard { width: 100%; max-height: calc(100svh - 16px); border-width: 4px; border-radius: 12px; }
+  .arrivalBoardTop { height: 56px; padding: 0 11px; }
+  .arrivalRouteBadge { width: 34px; height: 34px; font-size: 8px; }
+  .arrivalRoute strong { font-size: 15px; }
+  .arrivalClock { font-size: 22px; }
+  .arrivalMessage {
+    min-height: 150px;
+    grid-template-columns: 64px minmax(0,1fr);
+    gap: 10px;
+    padding: 18px 16px;
+  }
+  .arrivalWords small { font-size: 14px; }
+  .arrivalWords h2 { font-size: clamp(36px, 12vw, 52px); }
+  .bestRibbon { font-size: 6px; }
+  .arrivalLineStrip { height: 38px; padding: 0 11px; }
+  .arrivalLineStrip > strong { font-size: 9px; }
+  .arrivalTerminal { font-size: 6px; }
+  .arrivalStats { grid-template-columns: repeat(3,1fr); gap: 4px; padding: 9px 8px 5px; }
+  .arrivalStats > div { min-height: 58px; padding: 6px 3px; }
+  .arrivalStats small { font-size: 6px; }
+  .arrivalStats strong { font-size: 21px; }
+  .arrivalStats strong span { font-size: 7px; }
+  .arrivalActions { grid-template-columns: 1fr; padding: 6px 8px 9px; }
+  .arrivalActions button { height: 44px; font-size: 13px; }
+  .bestTimeLine { font-size: 7px; }
+}
+
+/* Coarse-pointer devices should never advertise a keyboard-only control. */
+@media (hover: none) and (pointer: coarse) {
+  .transferCycleHintV14 > kbd { display: none; }
+  .transferCycleHintV14 { padding-left: 8px; }
+  .transferCycleDotsV14 button { min-width: 40px; min-height: 40px; }
+}
+
+@media (max-width: 640px) {
+  .landingTrainLogo svg { width: 38px; height: 38px; }
+  .routeSelectBrandV10 svg { width: 36px; height: 36px; }
+  .selectedRouteIdentityV10 > svg { width: 58px; height: 58px; flex: 0 0 58px; }
+  .dockTrain svg { width: 50px; height: 50px; }
+  .arrivalTrain svg { width: 58px; height: 58px; }
+}
+
+/* =========================================================
+   STESEN v17 — compact desktop density
+   Desktop Windows scaling can leave a short CSS viewport even when
+   Chrome itself is at 100%.  Keep mobile untouched, but compact every
+   desktop surface when the available viewport height is laptop-sized.
+   ========================================================= */
+@media (min-width: 641px) and (max-height: 900px) {
+  /* Landing */
+  .landingHeaderV9 { height: 58px; width: min(1080px, calc(100% - 32px)); }
+  .landingTrainLogo { width: 38px; height: 38px; }
+  .landingTrainLogo svg { width: 36px; height: 36px; }
+  .landingBrandV9 strong { font-size: 21px; }
+  .landingMenuV9 {
+    width: min(1080px, calc(100% - 32px));
+    min-height: calc(100vh - 88px);
+  }
+  .landingTextAction {
+    min-width: 250px;
+    gap: 30px;
+    font-size: clamp(34px, 6vh, 46px);
+  }
+  .landingFooterV9 {
+    left: max(16px, calc((100vw - 1080px) / 2));
+    right: max(16px, calc((100vw - 1080px) / 2));
+    bottom: 9px;
+    font-size: 6px;
+  }
+
+  /* Route picker */
+  .routeSelectShellV10 { padding: 0 12px 10px; }
+  .routeSelectHeaderV10 { width: min(1080px, 100%); height: 52px; }
+  .routeBackV10 { min-height: 34px; font-size: 13px; }
+  .routeBackV10 span { font-size: 20px; }
+  .routeSelectBrandV10 strong { font-size: 18px; }
+  .routeSelectBrandV10 svg { width: 34px; height: 34px; }
+  .routeSelectMainPanelV10 {
+    width: min(1080px, 100%);
+    height: calc(100vh - 62px);
+    min-height: 0;
+    margin-top: 6px;
+    grid-template-rows: 66px 54px minmax(0, 1fr);
+    border-top-width: 4px;
+    border-radius: 15px;
+    box-shadow: 0 5px 0 rgba(33,48,55,.06);
+  }
+  .routeSelectTopV10 { gap: 10px; padding: 7px 12px; }
+  .selectedRouteIdentityV10 { gap: 8px; }
+  .selectedRouteIdentityV10 > svg { width: 48px; height: 48px; flex: 0 0 48px; }
+  .selectedRouteIdentityV10 h1 { font-size: 25px; }
+  .selectedRouteIdentityV10 p { margin-top: 2px; font-size: 7px; }
+  .officialRouteNumberV10 { min-width: 38px; height: 38px; padding: 0 7px; font-size: 10px; }
+  .selectedRouteRecordsV10 > div { padding: 6px 10px; }
+  .selectedRouteRecordsV10 small { font-size: 7px; }
+  .selectedRouteRecordsV10 strong { margin-top: 3px; font-size: 18px; }
+  .selectedRouteRecordsV10 strong span { font-size: 7px; }
+  .routeSelectBodyV10 { grid-template-columns: minmax(0, 1.9fr) minmax(250px, .65fr); }
+  .routeLibraryV10 { padding: 10px 12px 12px; }
+  .routeLibraryHeadingV13 { margin-bottom: 7px; }
+  .routeLibraryHeadingV13 h2 { font-size: 23px; }
+  .routeGridUnifiedV11,
+  .etsRouteGridV13 { gap: 5px; }
+  .routeGridUnifiedV11 .routeTileV10,
+  .routeTileV10 {
+    min-height: 50px;
+    grid-template-columns: 31px minmax(0, 1fr);
+    gap: 7px;
+    padding: 5px 7px;
+    border-radius: 9px;
+  }
+  .routeNumberTileV10 { width: 30px; height: 30px; font-size: 7px; }
+  .routeTileV10 > span strong { font-size: 11px; }
+  .routeTileV10 > span small { margin-top: 1px; font-size: 6px; }
+  .etsRouteGroupV13 { margin-top: 9px; padding-top: 8px; }
+  .etsRouteGroupV13 h3 { margin-bottom: 5px; font-size: 14px; }
+  .journeySetupV10,
+  .journeySetupNoHeadingV15 { padding: 10px; }
+  .terminalChoicesV10 { gap: 5px; }
+  .terminalChoicesV10 button {
+    min-height: 51px;
+    grid-template-columns: 31px minmax(0, 1fr);
+    gap: 7px;
+    padding: 5px 7px;
+    border-radius: 9px;
+  }
+  .terminalChoicesV10 button > i { width: 30px; height: 30px; border-radius: 8px; font-size: 7px; }
+  .terminalChoicesV10 button span small { font-size: 5px; }
+  .terminalChoicesV10 button span strong { font-size: 12px; }
+  .terminalChoicesV10 button span em { margin-top: 1px; font-size: 6px; }
+  .routeStartTextV14 { margin-top: 7px; padding-top: 4px; }
+  .routeStartTextV14 strong { font-size: 17px; }
+  .routeStartTextV14 small { font-size: 6px; }
+
+  /* Records */
+  .recordsDialog {
+    width: min(620px, calc(100% - 24px));
+    max-height: calc(100vh - 24px);
+    padding: 16px;
+    border-radius: 14px;
+  }
+  .recordsHead h2 { font-size: 25px; }
+  .recordsHead > button { width: 31px; height: 31px; font-size: 19px; }
+  .recordsList { margin-top: 11px; gap: 5px; }
+  .recordRow {
+    min-height: 52px;
+    grid-template-columns: 34px minmax(0,1fr) 92px 108px;
+    gap: 7px;
+    padding: 5px;
+    border-radius: 9px;
+  }
+  .recordRow > i { width: 34px; height: 34px; border-radius: 9px; font-size: 7px; }
+  .recordRow span strong { font-size: 11px; }
+  .recordRow span small { font-size: 6px; }
+  .recordRow > b { font-size: 13px; }
+  .recordRow > em { font-size: 7px; }
+
+  /* Gameplay */
+  .simpleTopBar { height: 46px; padding: 0 12px; }
+  .simpleTopButton { height: 30px; font-size: 11px; }
+  .simpleTopButton span { font-size: 17px; }
+  .simpleSettingsButton span { font-size: 16px; }
+  .settingsPopover { top: 42px; right: 10px; width: 245px; padding: 9px 10px; border-radius: 11px; }
+  .settingsPopoverHead strong { font-size: 14px; }
+  .settingRow strong { font-size: 10px; }
+  .settingRow small { font-size: 7px; }
+  .settingRow > button { min-width: 56px; height: 28px; font-size: 7px; }
+
+  .mapRouteTag { top: 48px; left: 10px; min-height: 36px; padding: 4px 7px 4px 4px; border-radius: 9px; }
+  .mapRouteNumber { width: 28px !important; height: 28px !important; font-size: 8px !important; }
+  .mapRouteTag small { font-size: 5px; }
+  .mapRouteTag strong { font-size: 9px; }
+  .mapZoom { top: 48px; right: 9px; }
+  .mapZoom button { width: 32px; height: 30px; font-size: 13px; }
+  .stesen-map-station { width: 18px; height: 18px; font-size: 6px; }
+  .stesen-map-station.is-current { width: 20px; height: 20px; font-size: 7px; }
+  .stesen-map-label { font-size: 7px; }
+  .stesen-map-label.is-near { font-size: 8px; }
+  .stesen-train-marker,
+  .stesen-map-train { width: 52px; height: 52px; }
+  .stesen-map-train svg { width: 52px; height: 52px; }
+
+  .typingDock {
+    bottom: 7px;
+    width: min(1080px, calc(100% - 22px));
+    height: 108px;
+    grid-template-columns: minmax(145px,.65fr) minmax(410px,2fr) minmax(145px,.65fr);
+    border-radius: 15px;
+  }
+  .typingDock::before,
+  .typingDock::after { width: 16px; height: 32px; }
+  .dockSide { gap: 6px; padding: 10px 12px; }
+  .dockSide small { font-size: 6px; }
+  .dockSide strong { margin-top: 2px; font-size: 13px; }
+  .dockArrow { width: 28px; height: 28px; font-size: 13px; }
+  .dockMain {
+    height: 108px;
+    grid-template-columns: 52px minmax(0,1fr);
+    gap: 10px;
+    padding: 7px 14px 8px;
+    border-top-width: 4px;
+    border-radius: 13px;
+  }
+  .dockTrain svg { width: 46px; height: 46px; }
+  .traceBox { min-height: 75px; }
+  .traceSizeLg { font-size: 38px; }
+  .traceSizeMd { font-size: 34px; }
+  .traceSizeSm { font-size: 30px; }
+  .traceSizeXs { font-size: 27px; }
+  .traceSizeXxs { font-size: 24px; }
+
+  .centerTimer {
+    bottom: 123px;
+    width: 315px;
+    height: 46px;
+    grid-template-columns: 59px 1px 1fr 1px 61px;
+    gap: 6px;
+    padding: 4px 7px;
+    border-radius: 10px;
+  }
+  .centerTimer > i { height: 24px; }
+  .speedReadout strong,
+  .timeReadout strong,
+  .accuracyReadout strong { font-size: 18px; }
+  .speedReadout small,
+  .timeReadout small,
+  .accuracyReadout small { font-size: 5px; }
+  .transferCycleHintV14 { bottom: 176px; min-height: 35px; gap: 6px; padding: 4px 6px; }
+  .transferCycleHintV14 > kbd { min-width: 33px; height: 22px; font-size: 7px; }
+  .transferCycleDotsV14 button { width: 23px; height: 23px; }
+
+  /* Completion */
+  .arrivalOverlay { padding: 10px; }
+  .arrivalBoard {
+    width: min(680px, calc(100% - 18px));
+    max-height: calc(100vh - 20px);
+    border-width: 4px;
+    border-radius: 10px;
+  }
+  .arrivalBoardTop { height: 49px; padding: 0 12px; }
+  .arrivalRouteBadge { width: 31px; height: 31px; font-size: 7px; }
+  .arrivalRoute small { font-size: 5px; }
+  .arrivalRoute strong { font-size: 13px; }
+  .journeyBadges i { width: 20px; height: 20px; font-size: 5px; }
+  .arrivalClock { font-size: 20px; }
+  .arrivalMessage {
+    min-height: 125px;
+    grid-template-columns: 58px minmax(0,1fr);
+    gap: 12px;
+    padding: 14px 22px;
+  }
+  .arrivalTrain svg { width: 55px; height: 55px; }
+  .arrivalWords small { font-size: 12px; }
+  .arrivalWords h2 { margin-top: 4px; font-size: clamp(34px, 5vw, 50px); }
+  .bestRibbon { top: 8px; right: 8px; font-size: 5px; }
+  .arrivalLineStrip { height: 32px; padding: 0 12px; border-top-width: 4px; }
+  .arrivalLineStrip > strong { font-size: 8px; }
+  .arrivalTerminal { font-size: 5px; }
+  .arrivalStats { gap: 5px; padding: 8px 9px 4px; }
+  .arrivalStats > div { min-height: 52px; }
+  .arrivalStats small { font-size: 6px; }
+  .arrivalStats strong { margin-top: 3px; font-size: 21px; }
+  .arrivalStats strong span { font-size: 7px; }
+  .bestTimeLine { padding: 0 10px 3px; font-size: 6px; }
+  .arrivalActions { gap: 5px; padding: 4px 9px 9px; }
+  .arrivalActions button { height: 38px; font-size: 10px; }
+}
+
+/* Very short desktop windows get one more density step. */
+@media (min-width: 641px) and (max-height: 650px) {
+  .routeSelectHeaderV10 { height: 44px; }
+  .routeSelectMainPanelV10 { height: calc(100vh - 50px); margin-top: 3px; grid-template-rows: 58px 48px minmax(0,1fr); }
+  .routeSelectTopV10 { padding-top: 4px; padding-bottom: 4px; }
+  .selectedRouteIdentityV10 h1 { font-size: 22px; }
+  .routeLibraryV10 { padding-top: 7px; }
+  .routeLibraryHeadingV13 h2 { font-size: 20px; }
+  .routeGridUnifiedV11 .routeTileV10,
+  .routeTileV10 { min-height: 44px; }
+
+  .typingDock { height: 94px; }
+  .dockMain { height: 94px; }
+  .traceBox { min-height: 64px; }
+  .traceSizeLg { font-size: 34px; }
+  .traceSizeMd { font-size: 30px; }
+  .traceSizeSm { font-size: 27px; }
+  .traceSizeXs { font-size: 24px; }
+  .traceSizeXxs { font-size: 21px; }
+  .centerTimer { bottom: 106px; height: 42px; }
+  .transferCycleHintV14 { bottom: 154px; }
+
+  .arrivalBoard { width: min(610px, calc(100% - 16px)); }
+  .arrivalBoardTop { height: 43px; }
+  .arrivalMessage { min-height: 105px; padding-top: 11px; padding-bottom: 11px; }
+  .arrivalWords h2 { font-size: clamp(30px, 4.5vw, 44px); }
+  .arrivalStats > div { min-height: 45px; }
+  .arrivalActions button { height: 34px; }
+}
+
+/* =========================================================
+   STESEN v18 — iPhone keyboard-safe gameplay
+   The layout viewport does not reliably shrink when Safari opens the
+   software keyboard. TypingGame exposes --mobile-keyboard-height using
+   visualViewport so the game HUD can stay in the visible area.
+   ========================================================= */
+@media (max-width: 640px) {
+  /* Keep the gameplay canvas locked in place. Safari should not scroll the
+     whole page just to reveal our transparent typing input. */
+  .stesenShell {
+    position: fixed;
+    inset: 0;
+    width: 100%;
+    height: 100dvh;
+    min-height: 0;
+    overscroll-behavior: none;
+    touch-action: manipulation;
+  }
+  .stesenShell .playfield,
+  .stesenShell .networkStage {
+    height: 100%;
+    min-height: 0;
+  }
+
+  /* The transparent field still needs a 16px computed font on iOS so Safari
+     never magnifies the page when it receives focus. */
+  .typingCapture { font-size: 16px; }
+
+  .stesenShell.is-mobile-keyboard-open .simpleTopBar {
+    height: 44px;
+    padding: 0 8px;
+  }
+  .stesenShell.is-mobile-keyboard-open .simpleTopButton {
+    height: 32px;
+    gap: 5px;
+    padding: 0 5px;
+    font-size: 11px;
+  }
+  .stesenShell.is-mobile-keyboard-open .simpleTopButton span { font-size: 18px; }
+  .stesenShell.is-mobile-keyboard-open .simpleSettingsButton span { font-size: 17px; }
+
+  /* Route identity is useful before typing. Once the keyboard is open the
+     map itself and the typing target get priority. */
+  .stesenShell.is-mobile-keyboard-open .mapRouteTag { display: none; }
+  .stesenShell.is-mobile-keyboard-open .mapZoom {
+    top: 48px;
+    right: 7px;
+    opacity: .88;
+  }
+  .stesenShell.is-mobile-keyboard-open .mapZoom button {
+    width: 32px;
+    height: 30px;
+    font-size: 14px;
+  }
+
+  /* Compact Metro-style strip directly above the phone browser/keyboard UI. */
+  .stesenShell.is-mobile-keyboard-open .typingDock {
+    bottom: calc(var(--mobile-keyboard-height, 0px) + 68px);
+    width: calc(100% - 16px);
+    height: 108px;
+    display: grid;
+    grid-template-columns: minmax(74px, .8fr) minmax(0, 2.35fr) minmax(74px, .8fr);
+    grid-template-rows: 108px;
+    overflow: hidden;
+    border-width: 2px;
+    border-radius: 22px;
+    box-shadow: 0 8px 24px rgba(31,44,50,.16);
+  }
+  .stesenShell.is-mobile-keyboard-open .typingDock::before,
+  .stesenShell.is-mobile-keyboard-open .typingDock::after { display: none; }
+
+  .stesenShell.is-mobile-keyboard-open .dockMain {
+    grid-column: 2;
+    grid-row: 1;
+    height: 108px;
+    grid-template-columns: 39px minmax(0,1fr);
+    gap: 7px;
+    padding: 7px 9px 8px;
+    border-top-width: 4px;
+    border-left: 2px solid color-mix(in srgb, var(--route-color) 50%, #d7d2c7);
+    border-right: 2px solid color-mix(in srgb, var(--route-color) 50%, #d7d2c7);
+    border-radius: 18px;
+  }
+  .stesenShell.is-mobile-keyboard-open .dockTrain svg {
+    width: 38px;
+    height: 38px;
+  }
+  .stesenShell.is-mobile-keyboard-open .traceBox { min-height: 82px; }
+  .stesenShell.is-mobile-keyboard-open .traceSizeLg { font-size: 31px; }
+  .stesenShell.is-mobile-keyboard-open .traceSizeMd { font-size: 28px; }
+  .stesenShell.is-mobile-keyboard-open .traceSizeSm { font-size: 25px; }
+  .stesenShell.is-mobile-keyboard-open .traceSizeXs { font-size: 22px; }
+  .stesenShell.is-mobile-keyboard-open .traceSizeXxs { font-size: 19px; }
+  .stesenShell.is-mobile-keyboard-open .typingTrace {
+    line-height: .93;
+    letter-spacing: -.035em;
+  }
+  .stesenShell.is-mobile-keyboard-open .traceCursor::after {
+    bottom: -5px;
+    height: 3px;
+  }
+
+  .stesenShell.is-mobile-keyboard-open .dockSide {
+    grid-row: 1;
+    min-width: 0;
+    height: 108px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 9px 6px;
+    border-top: 0;
+    text-align: center;
+  }
+  .stesenShell.is-mobile-keyboard-open .dockPrevious {
+    grid-column: 1;
+    border-right: 0;
+  }
+  .stesenShell.is-mobile-keyboard-open .dockNext {
+    grid-column: 3;
+    border-left: 0;
+  }
+  .stesenShell.is-mobile-keyboard-open .dockSide small {
+    display: none;
+  }
+  .stesenShell.is-mobile-keyboard-open .dockSide strong {
+    margin: 0;
+    font-size: 11px;
+    line-height: 1.04;
+    -webkit-line-clamp: 3;
+  }
+  .stesenShell.is-mobile-keyboard-open .dockArrow { display: none; }
+
+  .stesenShell.is-mobile-keyboard-open .centerTimer {
+    bottom: calc(var(--mobile-keyboard-height, 0px) + 184px);
+    width: min(318px, calc(100% - 34px));
+    height: 50px;
+    grid-template-columns: 62px 1px 1fr 1px 64px;
+    gap: 5px;
+    padding: 4px 7px;
+    border-top-width: 4px;
+    border-radius: 13px;
+  }
+  .stesenShell.is-mobile-keyboard-open .centerTimer > i { height: 26px; }
+  .stesenShell.is-mobile-keyboard-open .speedReadout strong,
+  .stesenShell.is-mobile-keyboard-open .timeReadout strong,
+  .stesenShell.is-mobile-keyboard-open .accuracyReadout strong { font-size: 19px; }
+  .stesenShell.is-mobile-keyboard-open .speedReadout small,
+  .stesenShell.is-mobile-keyboard-open .timeReadout small,
+  .stesenShell.is-mobile-keyboard-open .accuracyReadout small { font-size: 5px; }
+
+  /* Touch transfer choices sit above the stats, within thumb reach. */
+  .stesenShell.is-mobile-keyboard-open .transferCycleHintV14 {
+    bottom: calc(var(--mobile-keyboard-height, 0px) + 242px);
+    min-height: 43px;
+    max-width: calc(100% - 28px);
+    padding: 3px 6px;
+    border-radius: 22px;
+  }
+  .stesenShell.is-mobile-keyboard-open .transferCycleDotsV14 {
+    gap: 8px;
+    padding: 3px;
+  }
+  .stesenShell.is-mobile-keyboard-open .transferCycleDotsV14 button {
+    width: 34px;
+    height: 34px;
+    flex-basis: 34px;
+    min-width: 34px;
+    min-height: 34px;
+    font-size: 0;
+  }
+  .stesenShell.is-mobile-keyboard-open .transferCycleDotsV14 button.is-selected {
+    transform: scale(1.05);
+  }
+
+  /* The moving train remains visible above the compact HUD. */
+  .stesenShell.is-mobile-keyboard-open .stesen-train-marker,
+  .stesenShell.is-mobile-keyboard-open .stesen-map-train {
+    width: 50px;
+    height: 50px;
+  }
+  .stesenShell.is-mobile-keyboard-open .stesen-map-train svg {
+    width: 50px;
+    height: 50px;
+  }
+  .stesenShell.is-mobile-keyboard-open .stesen-map-label { font-size: 7px; }
+  .stesenShell.is-mobile-keyboard-open .stesen-map-label.is-near { font-size: 8px; }
+}
+
+/* Very narrow phones: preserve map space rather than letting station names
+   force the dock taller. */
+@media (max-width: 380px) {
+  .stesenShell.is-mobile-keyboard-open .typingDock {
+    width: calc(100% - 10px);
+    grid-template-columns: 68px minmax(0,1fr) 68px;
+  }
+  .stesenShell.is-mobile-keyboard-open .dockMain {
+    grid-template-columns: 34px minmax(0,1fr);
+    padding-left: 7px;
+    padding-right: 7px;
+  }
+  .stesenShell.is-mobile-keyboard-open .dockTrain svg { width: 33px; height: 33px; }
+  .stesenShell.is-mobile-keyboard-open .dockSide strong { font-size: 10px; }
+  .stesenShell.is-mobile-keyboard-open .traceSizeLg { font-size: 28px; }
+  .stesenShell.is-mobile-keyboard-open .traceSizeMd { font-size: 25px; }
+  .stesenShell.is-mobile-keyboard-open .traceSizeSm { font-size: 22px; }
+  .stesenShell.is-mobile-keyboard-open .traceSizeXs { font-size: 20px; }
+  .stesenShell.is-mobile-keyboard-open .traceSizeXxs { font-size: 18px; }
+}
